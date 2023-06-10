@@ -1,0 +1,15 @@
+{
+  "name": "catalogoweb-back",
+  "version": "1.0.0",
+  "description": "Back end del catalogo web hecho con angular",
+  "main": "app.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "author": "Daniel Patiño",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
+  }
+}
