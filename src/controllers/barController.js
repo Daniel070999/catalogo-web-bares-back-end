@@ -1,12 +1,12 @@
-const barModel = require('../models/barModel');
+const barModel = require('../helper/barHelper');
 
 // Obtener todos los usuarios
 function getAllBars(req, res) {
-  barModel.getAllBars((err, users) => {
+  barModel.getAllBars((err, bars) => {
     if (err) {
       res.status(500).json({ error: 'Error al obtener usuarios '+err });
     } else {
-      res.json(users);
+      res.json(bars);
     }
   });
 }
