@@ -5,7 +5,7 @@ function insertReg(req, res) {
 
     registerHelper.insertRegister((err, result) => {
         if (err) {
-            res.status(500).json({ error: 'Error al obtener usuarios ' + err });
+            res.status(500).json({ error: 'Error al registrar ' + err });
         } else {
             res.json(result);
         }

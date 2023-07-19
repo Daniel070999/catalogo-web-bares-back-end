@@ -1,15 +1,16 @@
 const connection = require('../../config/database');
+const bdd = require('../../Models/sql/bddTables');
 
-function insertRegister( req,callback) {
-  const user = callback.User;
-  const pass = callback.Password;
-  const email = callback.Email;
-  const sql = 'INSERT INTO `catalogowebbdd`.`tregistros` (`usuario`, `clave`, `email`) VALUES (?, ?, ?)';
-  connection.query(sql, [user, pass, email], (err, results) => {
+function insertRegister(req, callback) {
+  const userData = [callback.User, callback.Password, callback.Email];
+  const columns = ['usuario', 'clave', 'email'];
+  const placeholders = columns.map(() => '?').join(',');
+  const sql = `INSERT INTO ${bdd.tables.tregistros.tabla}  (${columns}) VALUES (${placeholders})`;
+  connection.query(sql, userData, (err, results) => {
     if (err) {
       console.log(err, null);
     } else {
-      req(null, "registro");
+      req(null, "id del registro registro: " + results.insertId);
     }
   });
 }

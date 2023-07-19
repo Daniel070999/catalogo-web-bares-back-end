@@ -14,7 +14,7 @@ app.get('/', function (req, res, error) {
 app.use('/bar', barRoutes);
 
 //ruta de registro 
-app.use('/registro', registerRoutes);
+app.use('/register', registerRoutes);
 
 
 
