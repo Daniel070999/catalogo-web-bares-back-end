@@ -1,4 +1,4 @@
-const barModel = require('../helper/barHelper');
+const barModel = require('../../helper/bar/barHelper');
 
 // Obtener todos los usuarios
 function getAllBars(req, res) {

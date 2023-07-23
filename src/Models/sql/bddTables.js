@@ -1,28 +1,23 @@
-tables = {
-    tregistros: {
-        tabla: "tregistros",
-        campousuario: "usuario",
-        campoclave: "clave",
-        campoemail: "email"
-    },
-    tbar: {
-        tabla: "tbar",
-        camponombre: "nombre",
-        campolema: "lema",
-        campodescripcion: "descripcion",
-        cmapologo: "logo"
-    },
-    tubicacionbar: {
-        tabla: "tubicacionbar",
-        campodireccion: "direccion",
-        campolatitud: "latitud",
-        campolongitud: "longitud",
-        campociudad: "ciudad",
-        campopais: "pais",
-        campoidbar: "id_bar"
-    }
+tregistros = {
+    table: "tregistros",
+    columns: ["usuario", "clave", "email"],
 };
+tbar = {
+    table: "tbar",
+    columns: ["nombre", "lema", "descripcion", "logo"]
+};
+tubicacionbar = {
+    table: "tubicacionbar",
+    columns: ["direccion", "latitud", "longitud", "ciudad", "pais", "id_bar"]
+};
+tusuarios = {
+    table:"tusuarios",
+    columns: ["nombre","genero","telefono","fechanacimiento","tipopersona","id_registro"]
+}
 
 module.exports = {
-    tables
+    tregistros,
+    tbar,
+    tubicacionbar,
+    tusuarios
 }

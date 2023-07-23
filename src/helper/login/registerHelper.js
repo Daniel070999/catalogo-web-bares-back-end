@@ -1,20 +1,37 @@
 const connection = require('../../config/database');
 const bdd = require('../../Models/sql/bddTables');
+const utils = require('../../helper/utils');
 
 function insertRegister(req, callback) {
-  const userData = [callback.User, callback.Password, callback.Email];
-  const columns = ['usuario', 'clave', 'email'];
-  const placeholders = columns.map(() => '?').join(',');
-  const sql = `INSERT INTO ${bdd.tables.tregistros.tabla}  (${columns}) VALUES (${placeholders})`;
-  connection.query(sql, userData, (err, results) => {
+  const { usuario, clave, email } = callback;
+  const registerData = [usuario, clave, email];
+  const sql = utils.insertBDD(bdd.tregistros);
+
+  connection.query(sql, registerData, (err, results) => {
     if (err) {
       console.log(err, null);
     } else {
-      req(null, "id del registro registro: " + results.insertId);
+      req(null, results.insertId);
     }
   });
 }
 
+function insertUser(req, callback, id_registro) {
+  const { nombre, genero, telefono, fechanacimiento, tipopersona } = callback;
+  const userData = [nombre, genero, telefono, fechanacimiento, tipopersona, id_registro];
+  const sql = utils.insertBDD(bdd.tusuarios);
+  connection.query(sql, userData, (err, results) => {
+    if (err) {
+      console.log(err, null);
+    } else {
+      req(null, results.insertId);
+    }
+  });
+}
+
+
+
 module.exports = {
-  insertRegister
+  insertRegister,
+  insertUser
 };

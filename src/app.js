@@ -1,6 +1,6 @@
 // app.js
 const express = require('express');
-const barRoutes = require('./routes/barRoutes');
+const barRoutes = require('./routes/bar/barRoutes');
 const registerRoutes = require('./routes/login/registerRoute');
 
 const app = express();

@@ -1,15 +1,27 @@
 const registerHelper = require('../../helper/login/registerHelper');
+const bdd = require('../../Models/sql/bddTables');
+const utils = require('../../helper/utils');
 
 function insertReg(req, res) {
-    const { user, password, email } = req.body;
+    const datosRegistro = utils.createObjectData(req.body, bdd.tregistros);
+    const datosUsuario = utils.createObjectData(req.body, bdd.tusuarios);
+    console.log(datosRegistro);
+    console.log(datosUsuario);
 
     registerHelper.insertRegister((err, result) => {
         if (err) {
-            res.status(500).json({ error: 'Error al registrar ' + err });
+            res.status(500).json({ error: 'Error al registrar registro ' + err });
         } else {
-            res.json(result);
+            registerHelper.insertUser((err, result) => {
+                if (err) {
+                    res.status(500).json({ error: 'Error al registrar usuario' + err });
+                } else {
+                    console.log(result);
+                    res.json('Usuario registrado: ' + result);
+                }
+            }, datosUsuario, result);
         }
-    }, { User: user, Password: password, Email: email });
+    }, datosRegistro);
 }
 
 module.exports = {
