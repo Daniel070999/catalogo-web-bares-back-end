@@ -6,7 +6,6 @@ function insertRegister(req, callback) {
   const { usuario, clave, email } = callback;
   const registerData = [usuario, clave, email];
   const sql = utils.insertBDD(bdd.tregistros);
-
   connection.query(sql, registerData, (err, results) => {
     if (err) {
       console.log(err, null);
@@ -28,8 +27,6 @@ function insertUser(req, callback, id_registro) {
     }
   });
 }
-
-
 
 module.exports = {
   insertRegister,

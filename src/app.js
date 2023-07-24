@@ -2,9 +2,13 @@
 const express = require('express');
 const barRoutes = require('./routes/bar/barRoutes');
 const registerRoutes = require('./routes/login/registerRoute');
+const cors = require('cors');
 
 const app = express();
+
 app.use(express.json());
+app.use(cors());
+const port = 3000;
 
 app.get('/', function (req, res, error) {
   res.end('Menu inicial');
@@ -14,10 +18,10 @@ app.get('/', function (req, res, error) {
 app.use('/bar', barRoutes);
 
 //ruta de registro 
-app.use('/register', registerRoutes);
+app.use('/login', registerRoutes);
 
 
 
-app.listen(3000, () => {
-  console.log('App Listening on port 3000');
+app.listen(port, () => {
+  console.log(`App Listening on port ${port}`);
 });
