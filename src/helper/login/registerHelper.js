@@ -4,7 +4,7 @@ const utils = require('../../helper/utils');
 
 function insertRegister(req, callback) {
   const { usuario, clave, email } = callback;
-  const registerData = [usuario, clave, email];
+  const registerData = [usuario, clave, email,rol='1'];
   const sql = utils.insertBDD(bdd.tregistros);
   connection.query(sql, registerData, (err, results) => {
     if (err) {

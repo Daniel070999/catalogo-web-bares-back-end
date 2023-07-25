@@ -1,6 +1,6 @@
 tregistros = {
     table: "tregistros",
-    columns: ["usuario", "clave", "email"],
+    columns: ["usuario", "clave", "email","rol"],
 };
 tbar = {
     table: "tbar",
