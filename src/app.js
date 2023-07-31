@@ -2,6 +2,7 @@
 const express = require('express');
 const barRoutes = require('./routes/bar/barRoutes');
 const registerRoutes = require('./routes/login/registerRoute');
+const verifySession = require('./helper/security/verifySession');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
@@ -25,6 +26,8 @@ app.use('/bar', barRoutes);
 //ruta de registro 
 app.use('/login', registerRoutes);
 
+//verificaSession
+app.use('/check', verifySession);
 
 
 app.listen(port, () => {

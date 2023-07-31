@@ -21,4 +21,24 @@ function authorize(roles = []) {
     ];
 }
 
-module.exports = authorize;
+function verifyLoggin(req, res, next) {
+    console.log(req.headers);
+  
+    // Verificamos si 'authorization' existe en 'req.headers' antes de usar split
+    const authorization = req.headers.authorization;
+    const cookie = req.cookies.access_token;
+  
+    if (authorization && cookie && authorization.split(' ')[1] === cookie) {
+      // Llamamos a next() para permitir que el flujo continúe hacia la siguiente capa del middleware (en este caso, el guard de Angular).
+      next();
+      res.status(200).json({ message: 'Ok' });
+    } else {
+      // Si la verificación falla, enviamos una respuesta con un código de estado 401 (Unauthorized) en lugar de 200.
+      res.status(401).json({ message: 'No está en sesión' });
+    }
+  }
+
+module.exports = {
+    authorize,
+    verifyLoggin
+};

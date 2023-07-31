@@ -10,7 +10,6 @@ function loginController(req, res) {
             res.status(500).json({ error: 'Error al iniciar sesion ' + err });
         } else {
             res.status(200).json({ message: result });
-            console.log(result[0].rol);
         }
     }, datosLogin,res); 
 }
