@@ -5,7 +5,7 @@ const loginController = require('../../controllers/login/loginController');
 const logoutController = require('../../controllers/login/logoutController');
 const verifyLoggin = require('./authorize');
 
-router.get('/verifySession', verifyLoggin.verifyLoggin);
+router.post('/verifySession', verifyLoggin.verifyLoggin);
 
 /*
 router.post('/login', logIn);                                 // ruta publica
