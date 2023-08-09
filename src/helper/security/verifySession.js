@@ -1,8 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const registerController = require('../../controllers/login/registerController');
-const loginController = require('../../controllers/login/loginController');
-const logoutController = require('../../controllers/login/logoutController');
 const verifyLoggin = require('./authorize');
 
 router.post('/verifySession', verifyLoggin.verifyLoggin);

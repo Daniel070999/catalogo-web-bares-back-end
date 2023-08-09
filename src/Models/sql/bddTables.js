@@ -1,6 +1,6 @@
 tregistros = {
     table: "tregistros",
-    columns: ["usuario", "email", "clave","rol"],
+    columns: ["id_registro", "usuario", "email", "clave", "rol"],
 };
 tbar = {
     table: "tbar",
@@ -11,13 +11,18 @@ tubicacionbar = {
     columns: ["direccion", "latitud", "longitud", "ciudad", "pais", "id_bar"]
 };
 tusuarios = {
-    table:"tusuarios",
-    columns: ["nombre","genero","telefono","fechanacimiento","tipopersona","id_registro"]
+    table: "tusuarios",
+    columns: ["nombre", "genero", "telefono", "fechanacimiento", "id_registro"]
+}
+tmenu = {
+    table: "tmenu",
+    columns: ["nombre", "descripcion", "precio", "id_bar"]
 }
 
 module.exports = {
     tregistros,
     tbar,
     tubicacionbar,
-    tusuarios
+    tusuarios,
+    tmenu
 }

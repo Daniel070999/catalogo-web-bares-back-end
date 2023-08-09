@@ -6,9 +6,9 @@ const jwt = require('jsonwebtoken');
 function login(req, callback, res) {
   const { usuario, email, clave } = callback;
   const data = [usuario, email, clave];
-  const sql = utils.selectBDDwithParams(bdd.tregistros, '(usuario=? OR email=?) AND clave=?');
+  const sql = utils.findById(bdd.tregistros, '(usuario=? OR email=?) AND clave=?');
   const sqlVerifyUser = `SELECT COUNT(*) count FROM ${bdd.tregistros.table} WHERE (usuario='${callback.usuario}' OR email='${callback.email}')`;
-  
+
   connection.query(sqlVerifyUser, data, (err, results) => {
     if (err) {
       console.log(err, null);
@@ -23,10 +23,12 @@ function login(req, callback, res) {
             if (results == '') {
               req('Las credenciales no son correctas');
             } else {
+              console.log(results);
               const datosLogin = utils.createObjectData(results[0], bdd.tregistros);
+              console.log(datosLogin);
               const token = jwt.sign(datosLogin, 'clavesecreta'/*, { expiresIn: '1h' }*/);
               res.header('Authorization', `Bearer ${token}`);
-              const resultAux = results.map((obj)=>({...obj,Authorization:`Bearer ${token}`,cookie:token}));
+              const resultAux = results.map((obj) => ({ ...obj, Authorization: `Bearer ${token}`, cookie: token }));
               req(null, resultAux);
             }
           }

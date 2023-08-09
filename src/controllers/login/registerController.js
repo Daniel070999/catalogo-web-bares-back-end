@@ -5,9 +5,6 @@ const utils = require('../../helper/utils');
 function insertReg(req, res) {
     const datosRegistro = utils.createObjectData(req.body, bdd.tregistros);
     const datosUsuario = utils.createObjectData(req.body, bdd.tusuarios);
-    console.log(datosRegistro);
-    console.log(datosUsuario);
-
     registerHelper.insertRegister((err, result) => {
         if (err) {
             res.status(500).json({ error: 'Error al registrar registro ' + err });

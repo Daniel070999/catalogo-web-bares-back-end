@@ -21,14 +21,14 @@ function selectBDD(table){
     const sql =`SELECT * FROM ${table.table}`;
 return sql;
 }
-function selectBDDwithParams(table,params=String){
-    const { columnsString } = generateColumnsAndPlaceholders(table);
-    const sql =`SELECT ${columnsString} FROM ${table.table} WHERE ${params}`;
+function findById(table,id){
+    const sql =`SELECT * FROM ${table.table} WHERE ${id}`;
 return sql;
 }
+
 module.exports = {
     createObjectData,
     insertBDD,
     selectBDD,
-    selectBDDwithParams
+    findById
 }

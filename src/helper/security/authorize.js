@@ -5,7 +5,19 @@ function authorize() {
     return expressJwt({ secret, algorithms: ['HS256'] });
 }
 
-
+function obtainId(req) {
+    return new Promise((resolve, reject) => {
+        authorize()(req, {}, () => {
+            if (req.auth) {
+                const id = req.auth.id_registro;
+                console.log(id);
+                resolve(id);
+            } else {
+                reject(new Error('No está en sesión'));
+            }
+        });
+    });
+}
 
 function verifyLoggin(req, res, next) {
     const authorization = req.headers.authorization;
@@ -32,5 +44,6 @@ function verifyLoggin(req, res, next) {
 
 module.exports = {
     authorize,
-    verifyLoggin
+    verifyLoggin,
+    obtainId
 };
