@@ -1,7 +1,7 @@
 const registerHelper = require('../helper/findByIdHelper');
 const getId = require('../helper/security/authorize');
 
-function findByIdController(req, res) {
+function findBarByIdController(req, res) {
     getId.obtainId(req)
         .then(id => {
             registerHelper.bar((err, result) => {
@@ -17,6 +17,28 @@ function findByIdController(req, res) {
         });
 }
 
+function findMenuByIdController(req, res) {
+    registerHelper.menu(req, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Error al registrar ' + err });
+        } else {
+            res.json(result);
+        }
+    });
+}
+
+function findDataBarByIdController(req, res) {
+    registerHelper.dataBar(req, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Error al registrar ' + err });
+        } else {
+            res.json(result);
+        }
+    });
+}
+
 module.exports = {
-    findByIdController
+    findBarByIdController,
+    findMenuByIdController,
+    findDataBarByIdController
 };
