@@ -10,8 +10,19 @@ function obtainId(req) {
         authorize()(req, {}, () => {
             if (req.auth) {
                 const id = req.auth.id_registro;
-                console.log(id);
                 resolve(id);
+            } else {
+                reject(new Error('No está en sesión'));
+            }
+        });
+    });
+}
+function obtainRol(req) {
+    return new Promise((resolve, reject) => {
+        authorize()(req, {}, () => {
+            if (req.auth) {
+                const rol = req.auth.rol;
+                resolve(rol);
             } else {
                 reject(new Error('No está en sesión'));
             }
@@ -45,5 +56,6 @@ function verifyLoggin(req, res, next) {
 module.exports = {
     authorize,
     verifyLoggin,
-    obtainId
+    obtainId,
+    obtainRol
 };

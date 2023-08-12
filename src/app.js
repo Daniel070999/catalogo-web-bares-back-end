@@ -3,7 +3,7 @@ const express = require('express');
 const barRoutes = require('./routes/bar/barRoutes');
 const loginRoutes = require('./routes/login/registerRoute');
 const registerRoutes = require('./routes/register/registerMenuRoute');
-const findById = require('./routes/findById');
+const find = require('./routes/find/findById');
 const verifySession = require('./helper/security/verifySession');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
@@ -35,7 +35,8 @@ app.use('/register', registerRoutes);
 app.use('/check', verifySession);
 
 //busquedas por Id
-app.use('/find', findById);
+app.use('/find', find);
+
 
 
 app.listen(port, () => {

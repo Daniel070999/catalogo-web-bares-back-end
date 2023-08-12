@@ -1,5 +1,5 @@
-const registerHelper = require('../helper/findByIdHelper');
-const getId = require('../helper/security/authorize');
+const registerHelper = require('../../helper/find/findByIdHelper');
+const getId = require('../../helper/security/authorize');
 
 function findBarByIdController(req, res) {
     getId.obtainId(req)

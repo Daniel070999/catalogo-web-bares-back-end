@@ -1,6 +1,6 @@
-const connection = require('../config/database');
-const bdd = require('../Models/sql/bddTables');
-const utils = require('../helper/utils');
+const connection = require('../../config/database');
+const bdd = require('../../Models/sql/bddTables');
+const utils = require('../utils');
 
 function bar(req, callback) {
     const { id_bar } = callback;
