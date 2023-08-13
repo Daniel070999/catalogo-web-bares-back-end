@@ -17,18 +17,22 @@ function insertBDD(table) {
     const sql = `INSERT INTO ${table.table} (${columnsString}) VALUES (${placeholdersString})`;
     return sql;
 }
-function selectBDD(table){
-    const sql =`SELECT * FROM ${table.table}`;
-return sql;
+function selectBDD(table) {
+    const sql = `SELECT * FROM ${table.table}`;
+    return sql;
 }
-function findById(table,id){
-    const sql =`SELECT * FROM ${table.table} WHERE ${id}`;
-return sql;
+function findById(table, id) {
+    const sql = `SELECT * FROM ${table.table} WHERE ${id}`;
+    return sql;
 }
-
+function updateById(table, value, id) {
+    const sql = `update ${table.table} set ${value} where ${id}`;
+    return sql;
+}
 module.exports = {
     createObjectData,
     insertBDD,
     selectBDD,
-    findById
+    findById,
+    updateById
 }

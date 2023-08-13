@@ -4,6 +4,7 @@ const barRoutes = require('./routes/bar/barRoutes');
 const loginRoutes = require('./routes/login/registerRoute');
 const registerRoutes = require('./routes/register/registerMenuRoute');
 const find = require('./routes/find/findById');
+const update = require('./routes/update/updates');
 const verifySession = require('./helper/security/verifySession');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
@@ -36,6 +37,9 @@ app.use('/check', verifySession);
 
 //busquedas por Id
 app.use('/find', find);
+
+//actualizaciones
+app.use('/update', update);
 
 
 
