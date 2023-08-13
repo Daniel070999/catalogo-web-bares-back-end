@@ -18,11 +18,16 @@ tmenu = {
     table: "tmenu",
     columns: ["nombre", "descripcion", "precio", "id_bar"]
 }
+troles = {
+    table: "troles",
+    columns: ["id_rol","descripcion", "rol"]
+}
 
 module.exports = {
     tregistros,
     tbar,
     tubicacionbar,
     tusuarios,
-    tmenu
+    tmenu,
+    troles
 }
