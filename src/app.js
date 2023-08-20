@@ -5,7 +5,7 @@ const loginRoutes = require('./routes/login/registerRoute');
 const registerRoutes = require('./routes/register/registerMenuRoute');
 const find = require('./routes/find/findById');
 const update = require('./routes/update/updates');
-const verifySession = require('./helper/security/verifySession');
+const security = require('./helper/security/security');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
@@ -33,7 +33,7 @@ app.use('/login', loginRoutes);
 app.use('/register', registerRoutes);
 
 //verificaSession
-app.use('/check', verifySession);
+app.use('/check', security);
 
 //busquedas por Id
 app.use('/find', find);
