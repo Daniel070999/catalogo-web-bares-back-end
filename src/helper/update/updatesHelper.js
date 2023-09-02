@@ -26,7 +26,20 @@ function adminrol(req, callback) {
         }
     });
 }
+
+function loginFailed(id_registro, intento) {
+    const sql = utils.updateById(bdd.tregistros, `intentoslogin=${intento}`, `id_registro=${id_registro}`);
+    connection.query(sql, (err, results) => {
+        if (err) {
+            console.log(err, null);
+        } else {
+            console.log(results.message);
+        }
+    });
+}
+
 module.exports = {
     adminbar,
-    adminrol
+    adminrol,
+    loginFailed
 };

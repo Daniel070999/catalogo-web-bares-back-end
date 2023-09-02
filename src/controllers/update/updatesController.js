@@ -41,7 +41,14 @@ function updateAdminRolController(req, res) {
             res.status(401).json({ message: error.message });
         });
 }
+
+function updateLoginFailed(id_registro, intentos) {
+
+    updateHelper.loginFailed(id_registro, intentos);
+}
+
 module.exports = {
     updateAdminBarController,
-    updateAdminRolController
+    updateAdminRolController,
+    updateLoginFailed
 };

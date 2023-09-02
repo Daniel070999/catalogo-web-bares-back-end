@@ -3,6 +3,7 @@ const bdd = require('../../Models/sql/bddTables');
 const utils = require('../../helper/utils');
 const jwt = require('jsonwebtoken');
 const compare = require('../security/bcrypt');
+const update = require('../../controllers/update/updatesController');
 
 function login(req, callback, res) {
   const { usuario, email } = callback;
@@ -20,17 +21,27 @@ function login(req, callback, res) {
           if (err) {
             console.log(err, null);
           } else {
-            const verify = await compare.compare(clave, results[0].clave);
-            if (verify) {
-              const datosLogin = utils.createObjectData(results[0], bdd.tregistros);
-              const token = jwt.sign(datosLogin, 'clavesecreta'/*, { expiresIn: '1h' }*/);
-              res.header('Authorization', `Bearer ${token}`);
-              const resultAux = results.map((obj) => ({ ...obj, Authorization: `Bearer ${token}`, cookie: token }));
-              req(null, resultAux);
-
+            const intentsLogin = results[0].intentoslogin;
+            if (intentsLogin <= 2) {
+              const verify = await compare.compare(clave, results[0].clave);
+              if (verify) {
+                const datosLogin = utils.createObjectData(results[0], bdd.tregistros);
+                const token = jwt.sign(datosLogin, 'clavesecreta'/*, { expiresIn: '1h' }*/);
+                res.header('Authorization', `Bearer ${token}`);
+                const resultAux = results.map((obj) => ({ ...obj, Authorization: `Bearer ${token}`, cookie: token }));
+                update.updateLoginFailed(results[0].id_registro, 0)
+                req(null, resultAux);
+              } else {
+                const intentos = 2 - results[0].intentoslogin;
+                const nuevoIntento = results[0].intentoslogin + 1;
+                req(`Clave incorrecta, tiene ${intentos} intentos`);
+                update.updateLoginFailed(results[0].id_registro, nuevoIntento);
+              }
             } else {
-              req('Las credenciales no son correctas');
+
+              req('Su cuenta esta bloqueada por ingresar varias veces una clave incorrecta');
             }
+
           }
         });
       } else {
