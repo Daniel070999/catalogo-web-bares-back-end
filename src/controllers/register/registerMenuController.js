@@ -6,7 +6,7 @@ function insertRegMenuController(req, res) {
     const datosRegistro = utils.createObjectData(req.body, bdd.tmenu);
     console.log(datosRegistro);
 
-    registerHelper.insertRegister((err, result) => {
+    registerHelper.insertRegisterMenu((err, result) => {
         if (err) {
             res.status(500).json({ error: 'Error al registrar ' + err });
         } else {
@@ -14,7 +14,19 @@ function insertRegMenuController(req, res) {
         }
     }, datosRegistro);
 }
+function insertRegBarController(req, res) {
+    const datosRegistro = utils.createObjectData(req.body, bdd.tbar);
+    console.log(datosRegistro);
 
+    registerHelper.insertRegisterBar((err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Error al registrar ' + err });
+        } else {
+            res.json('Bar registrado: ' + result);
+        }
+    }, datosRegistro);
+}
 module.exports = {
-    insertRegMenuController
+    insertRegMenuController,
+    insertRegBarController
 };
