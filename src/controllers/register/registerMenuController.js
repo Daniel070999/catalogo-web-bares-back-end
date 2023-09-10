@@ -16,9 +16,8 @@ function insertRegMenuController(req, res) {
 }
 function insertRegBarController(req, res) {
     const datosRegistro = utils.createObjectData(req.body, bdd.tbar);
-    console.log(datosRegistro);
 
-    registerHelper.insertRegisterBar((err, result) => {
+    registerHelper.insertRegisterBar(req.file, req, (err, result) => {
         if (err) {
             res.status(500).json({ error: 'Error al registrar ' + err });
         } else {

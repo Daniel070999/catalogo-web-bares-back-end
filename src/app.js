@@ -5,6 +5,7 @@ const loginRoutes = require('./routes/login/registerRoute');
 const registerRoutes = require('./routes/register/registerMenuRoute');
 const find = require('./routes/find/findById');
 const update = require('./routes/update/updates');
+const files = require('./routes/files/files');
 const security = require('./helper/security/security');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
@@ -40,6 +41,10 @@ app.use('/find', find);
 
 //actualizaciones
 app.use('/update', update);
+
+//ver archivos
+app.use('/files', files);
+
 
 
 
