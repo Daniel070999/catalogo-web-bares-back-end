@@ -16,7 +16,7 @@ tusuarios = {
 }
 tmenu = {
     table: "tmenu",
-    columns: ["nombre", "descripcion", "precio", "id_bar"]
+    columns: ["nombre", "descripcion", "precio", "id_bar", "image"]
 }
 troles = {
     table: "troles",

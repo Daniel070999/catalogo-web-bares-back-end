@@ -6,7 +6,7 @@ function insertRegMenuController(req, res) {
     const datosRegistro = utils.createObjectData(req.body, bdd.tmenu);
     console.log(datosRegistro);
 
-    registerHelper.insertRegisterMenu((err, result) => {
+    registerHelper.insertRegisterMenu(req.file, req, (err, result) => {
         if (err) {
             res.status(500).json({ error: 'Error al registrar ' + err });
         } else {

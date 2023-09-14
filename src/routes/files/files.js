@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const imagesDirectory = path.join(__dirname, '..', '..', '..', 'uploads', 'images');
+const imagesDirectory = path.join(__dirname, '..', '..', '..', 'uploads', 'images', 'logo');
 
 router.get('/images/:imageName', (req, res) => {
     const imageName = req.params.imageName;

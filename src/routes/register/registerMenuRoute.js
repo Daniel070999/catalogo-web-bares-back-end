@@ -5,7 +5,7 @@ const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-router.post('/newmenu', registerController.insertRegMenuController);
+router.post('/newmenu',upload.single('image'), registerController.insertRegMenuController);
 router.post('/newbar', upload.single('logo'), registerController.insertRegBarController);
 
 module.exports = router;
