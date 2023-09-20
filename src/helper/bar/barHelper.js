@@ -1,11 +1,21 @@
 const connection = require('../../config/database');
-const bdd = require('../../Models/sql/bddTables');
-const utils = require('../../helper/utils');
+const TableBar = require('../../Models/Tables/TableBar');
 
-// Obtener todos los usuarios
-function getAllBars(callback) {
-  const sql = utils.selectBDD(bdd.tbar);
-  connection.query(sql, (err, results) => {
+/**
+ * Obtiene todos los registros de los Bares
+ * @param {function} callback La función de devolución que se ejecutará cuando se 
+ *                            complete la operación, debe seguir el orden de (err) y lueg (result).
+ * @example function(err, result) { ... }
+ */
+function getBarsHelper(callback) {
+  const tableBar = new TableBar();
+  const queryGetData = tableBar.getData();
+  const valuesTableBar = tableBar.columns;
+  const tableNameBar = tableBar.table;
+  const buildValues = valuesTableBar;
+  buildValues.push(tableNameBar);
+
+  connection.query(queryGetData, buildValues, (err, results) => {
     if (err) {
       callback(err, null);
     } else {
@@ -15,5 +25,5 @@ function getAllBars(callback) {
 }
 
 module.exports = {
-  getAllBars
+  getBarsHelper
 };
