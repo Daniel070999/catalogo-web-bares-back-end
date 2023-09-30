@@ -9,12 +9,9 @@ const directoryImageMenu = path.join(__dirname, '..', '..', '..', 'uploads', 'im
 router.get('/logobar/:imageName', (req, res) => {
     const imageName = req.params.imageName;
     const imagePath = path.join(directoryLogo, imageName);
-    // Verifica si el archivo de imagen existe en el directorio
     if (fs.existsSync(imagePath)) {
-        // Si existe, envía el archivo de imagen como respuesta
         res.sendFile(imagePath);
     } else {
-        // Si no existe, envía una respuesta de error
         res.status(404).send('Imagen no encontrada');
     }
 });
@@ -22,12 +19,9 @@ router.get('/logobar/:imageName', (req, res) => {
 router.get('/logomenu/:imageName', (req, res) => {
     const imageName = req.params.imageName;
     const imagePath = path.join(directoryImageMenu, imageName);
-    // Verifica si el archivo de imagen existe en el directorio
     if (fs.existsSync(imagePath)) {
-        // Si existe, envía el archivo de imagen como respuesta
         res.sendFile(imagePath);
     } else {
-        // Si no existe, envía una respuesta de error
         res.status(404).send('Imagen no encontrada');
     }
 });

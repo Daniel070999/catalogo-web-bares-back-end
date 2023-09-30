@@ -1,3 +1,5 @@
+const CRUD = require('../sql/CRUD');
+
 class TableBarLocation extends CRUD {
 
     table = 'tubicacionbar';
@@ -14,86 +16,56 @@ class TableBarLocation extends CRUD {
     }
 
     /**
-     * Método para obtener el query de buscar un registro
-     * @returns Devuelve el query para buscar un registro
-     * @example getData() {
-                    return 'SELECT ?,... FROM ?';
-                }
+     * The function returns a query to obtain registers from a table.
+     * @returns The function `getQueryObtainRegisters()` is returning the result of a select query on
+     * the table.
      */
-    getData() {
-        return this.select(this.columns.length);
+    getQueryObtainRegisters() {
+        return this.select(this.table);
     }
 
     /**
-     * Método para obtener el query de buscar un registro con un número de select definido
-     * @param {int} columnsGet Número de campos a buscar
-     * @returns Devuelve el query para buscar un registro con un número de select definido
-     * @example getDataOnly(3) {
-                    return 'SELECT ?,?,? FROM ?';
-                }
+     * The function `getQueryObtainRegistersById` returns the result of selecting a row from a table by
+     * its ID.
+     * @param {any} id - The id parameter is the unique identifier of the register that you want to obtain.
+     * @returns The function `getQueryObtainRegistersById` is returning the result of calling the
+     * `selectById` method with the `this.table` and `id` as arguments.
      */
-    getDataOnly(columnsGet) {
-        return this.select(columnsGet);
+    getQueryObtainRegistersById(id) {
+        return this.selectById(this.table, id);
     }
 
     /**
-     * Método para obtener el query de buscar un registro con condiciones
-     * @param {String} conditions Condiciones para buscar el registro
-     * @returns Devuelve el query para buscar un registro con condiciones
-     * @example getDataWhere('?=? AND ?=?') {
-                    return 'SELECT ?,... FROM ? WHERE ?=? AND ?=?';
-                }
+     * The function `getQueryUpdateById` updates a specific field in a table by its ID.
+     * @param {String} campo - The "campo" parameter represents the field or column that you want to update in
+     * the database table.
+     * @param {any} id - The id parameter is the unique identifier of the record that you want to update in
+     * the database.
+     * @returns the result of the updateById method with the parameters table, campo, and id.
      */
-    getDataWhere(conditions) {
-        return this.selectWhere(this.columns.length, conditions);
+    getQueryUpdateById(campo, id) {
+        return this.updateById(this.table, campo, id);
     }
 
     /**
-     * Método para obtener el query de buscar un registro con un número de select definido con condiciones
-     * @param {int} columnsGet Número de campos a buscar
-     * @param {String} conditions Condiciones para buscar el registro
-     * @returns  Devuelve el query para buscar un registro con un número de select definido y con condiciones
-     * @example getDataOnlyAndWhere(2, '?=? AND ?=?') {
-                    return 'SELECT ?,? FROM ? WHERE ?=? AND ?=?';
-                }
+     * The function returns an insert query for a specified table.
+     * @returns The insert query for the specified table.
      */
-    getDataOnlyAndWhere(columnsGet, conditions) {
-        return this.selectWhere(columnsGet, conditions);
+    getQueryInsert() {
+        return this.insert(this.table);
     }
 
     /**
-     * Método para armar el query de actualizar un registro
-     * @param {String} values Campos a actualizar
-     * @param {String} conditions Condiciones para actualizar
-     * @returns Devuelve el query para actualizar un registro
-     * @example updateData('?=?,?=?','?=? AND ?=?') {
-                    return 'UPDATE ? SET ?=?,?=? WHERE ?=? AND ?=?';
-                }
+     * The function `getQueryDeleteById` returns a query to delete a record from a table based on its
+     * ID.
+     * @param {any} id - The id parameter is the unique identifier of the record that you want to delete from
+     * the table.
+     * @returns The function `getQueryDeleteById(id)` is returning the result of calling the
+     * `deleteById` method on `this` object, passing in the `table` and `id` as arguments.
      */
-    updateData(values, conditions) {
-        return this.update(values, conditions);
-    }
-
-    /**
-     * Método para armar el query de insertar un registro
-     * @returns Devuelve el query para insertar un registro
-     * @example insertData(3) {
-                    return 'INSERT INTO ? (?,?,?) VALUES (?,?,?)';
-                }
-     */
-    insertData() {
-        return this.insert(this.columns.length);
-    }
-
-    /**
-     * Método para armar el query de eliminar un registro
-     * @param {String} conditions Condiciones para eliminar un registro
-     * @returns Devuelve el query para eliminar un registro
-     * @example deleteData('?=? AND ?=?') {
-                    return 'DELETE FROM ? WHERE ?=? AND ?=?';
-                }
-     */
-    deleteData(conditions) {
-        return this.delete(conditions);
+    getQueryDeleteById(id) {
+        return this.deleteById(this.table, id);
     }
 }
+
+module.exports = TableBarLocation;

@@ -32,9 +32,38 @@ class Roles {
 
     /**
      * Método para armar una lista de todos los campos de la clase
-     * @returns devuelve una lista con todos los campos de la clase
+     * @returns devuelve una lista con todos los campos de la clase que no sean vacios
      */
-    buil() {
-        return [this.id_rol, this.descripcion, this.rol];
+    list() {
+
+        const data = [];
+
+        if (this.id_rol) {
+            data.push(this.id_rol);
+        }
+        if (this.descripcion) {
+            data.push(this.descripcion);
+        }
+        if (this.rol) {
+            data.push(this.rol);
+        }
+
+        return data;
+    }
+
+    Object() {
+        const data = {};
+        if (this.id_rol) {
+            data.id_rol = this.id_rol;
+        }
+        if (this.descripcion) {
+            data.descripcion = this.descripcion;
+        }
+        if (this.rol) {
+            data.rol = this.rol;
+        }
+        return data;
     }
 }
+
+module.exports = Roles;

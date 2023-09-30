@@ -68,9 +68,62 @@ class LocationBar {
 
     /**
      * Método para armar una lista de todos los campos de la clase
-     * @returns devuelve una lista con todos los campos de la clase
+     * @returns devuelve una lista con todos los campos de la clase que no sean vacios
      */
-    buil() {
-        return [this.id_ubicacionbar, this.direccion, this.latitud, this.longitud, this.ciudad, this.pais, this.id_bar];
+    list() {
+
+        const data = [];
+
+        if (this.id_ubicacionbar) {
+            data.push(this.id_ubicacionbar);
+        }
+        if (this.direccion) {
+            data.push(this.direccion);
+        }
+        if (this.latitud) {
+            data.push(this.latitud);
+        }
+        if (this.longitud) {
+            data.push(this.longitud);
+        }
+        if (this.ciudad) {
+            data.push(this.ciudad);
+        }
+        if (this.pais) {
+            data.push(this.pais);
+        }
+        if (this.id_bar) {
+            data.push(this.id_bar);
+        }
+
+        return data;
+    }
+
+    object() {
+        const data = {};
+        if (this.id_ubicacionbar) {
+            data.id_ubicacionbar = this.id_ubicacionbar;
+        }
+        if (this.direccion) {
+            data.direccion = this.direccion;
+        }
+        if (this.latitud) {
+            data.latitud = this.latitud;
+        }
+        if (this.longitud) {
+            data.longitud = this.longitud;
+        }
+        if (this.ciudad) {
+            data.ciudad = this.ciudad;
+        }
+        if (this.pais) {
+            data.pais = this.pais;
+        }
+        if (this.id_bar) {
+            data.id_bar = this.id_bar;
+        }
+        return data;
     }
 }
+
+module.exports = LocationBar;

@@ -59,9 +59,55 @@ class Register {
 
     /**
      * Método para armar una lista de todos los campos de la clase
-     * @returns devuelve una lista con todos los campos de la clase
+     * @returns devuelve una lista con todos los campos de la clase que no sean vacios
      */
-    buil() {
-        return [this.id_registro, this.usuario, this.clave, this.email, this.rol, this.intentoslogin];
+    list() {
+
+        const data = [];
+
+        if (this.id_registro) {
+            data.push(this.id_registro);
+        }
+        if (this.usuario) {
+            data.push(this.usuario);
+        }
+        if (this.clave) {
+            data.push(this.clave);
+        }
+        if (this.email) {
+            data.push(this.email);
+        }
+        if (this.rol) {
+            data.push(this.rol);
+        }
+        if (this.intentoslogin) {
+            data.push(this.intentoslogin);
+        }
+
+        return data;
+    }
+    object() {
+        const data = {};
+        if (this.id_registro) {
+            data.id_registro = this.id_registro;
+        }
+        if (this.usuario) {
+            data.usuario = this.usuario;
+        }
+        if (this.clave) {
+            data.clave = this.clave;
+        }
+        if (this.email) {
+            data.email = this.email;
+        }
+        if (this.rol) {
+            data.rol = this.rol;
+        }
+        if (this.intentoslogin) {
+            data.intentoslogin = this.intentoslogin;
+        }
+        return data;
     }
 }
+
+module.exports = Register;

@@ -68,9 +68,65 @@ class User {
 
     /**
      * Método para armar una lista de todos los campos de la clase
-     * @returns devuelve una lista con todos los campos de la clase
+     * @returns devuelve una lista con todos los campos de la clase que no sean vacios
      */
-    buil() {
-        return [this.id_usuario, this.nombre, this.genero, this.telefono, this.fechanacimiento, this.id_registro, this.id_bar];
+    list() {
+
+        const data = [];
+
+        if (this.id_usuario) {
+            data.push(this.id_usuario);
+        }
+        if (this.nombre) {
+            data.push(this.nombre);
+        }
+        if (this.genero) {
+            data.push(this.genero);
+        }
+        if (this.telefono) {
+            data.push(this.telefono);
+        }
+        if (this.fechanacimiento) {
+            data.push(this.fechanacimiento);
+        }
+        if (this.id_registro) {
+            data.push(this.id_registro);
+        }
+        if (this.id_bar) {
+            data.push(this.id_bar);
+        }
+
+        return data;
+    }
+
+    object() {
+
+        const data = {};
+
+        if (this.id_usuario) {
+            data.id_usuario = this.id_usuario;
+        }
+        if (this.nombre) {
+            data.nombre = this.nombre;
+        }
+        if (this.genero) {
+            data.genero = this.genero;
+        }
+        if (this.telefono) {
+            data.telefono = this.telefono;
+        }
+        if (this.fechanacimiento) {
+            data.fechanacimiento = this.fechanacimiento;
+        }
+        if (this.id_registro) {
+            data.id_registro = this.id_registro;
+        }
+        if (this.id_bar) {
+            data.id_bar = this.id_bar;
+        }
+
+        return data;
     }
 }
+
+module.exports = User;

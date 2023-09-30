@@ -1,53 +1,52 @@
-// app.js
 const express = require('express');
-const barRoutes = require('./routes/bar/barRoutes');
-const loginRoutes = require('./routes/login/registerRoute');
-const registerRoutes = require('./routes/register/registerMenuRoute');
-const find = require('./routes/find/findById');
-const update = require('./routes/update/updates');
-const files = require('./routes/files/files');
-const security = require('./helper/security/security');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
-const bodyParser = require('body-parser');
 
-const app =  express();
+const barRoutes = require('./routes/bar/barRoutes');
+const menuRoutes = require('./routes/menu/menuRoutes');
+const sessionRoutes = require('./routes/session/sessionRoute');
+const userRoutes = require('./routes/user/userRoutes');
+const rolRoutes = require('./routes/rol/rolRoute');
+const registerRoutes = require('./routes/register/registerRoute');
+const files = require('./routes/files/files');
+const security = require('./routes/security/securityRoute');
+const bodyParser = require('body-parser');
+const app = express();
+const port = 3000;
 
 app.use(express.json());
-
 app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-const port = 3000;
 
 app.get('/', function (req, res, error) {
   res.end('Menu inicial');
 });
 
 // Rutas de bares
-app.use('/bar', barRoutes);
+app.use('/bar', barRoutes);//ok
 
-//ruta de login
-app.use('/login', loginRoutes);
+//ruta de session
+app.use('/session', sessionRoutes);//ok
 
-//rutas de registros
-app.use('/register', registerRoutes);
+//ruta de menu
+app.use('/menu', menuRoutes)//ok
 
 //verificaSession
-app.use('/check', security);
+app.use('/check', security);//ok
 
-//busquedas por Id
-app.use('/find', find);
+//ruta de usuarios
+app.use('/user', userRoutes);//ok
 
-//actualizaciones
-app.use('/update', update);
+//ruta de roles
+app.use('/rol', rolRoutes);//ok
+
+//ruta de registros
+app.use('/register', registerRoutes);
 
 //ver archivos
-app.use('/files', files);
-
-
-
+app.use('/files', files);//ok
 
 app.listen(port, () => {
   console.log(`App Listening on port ${port}`);
