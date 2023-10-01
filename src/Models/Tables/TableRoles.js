@@ -33,14 +33,12 @@ class TableRoles extends CRUD {
 
     /**
      * The function `getQueryUpdateById` updates a specific field in a table by its ID.
-     * @param {String} campo - The "campo" parameter represents the field or column that you want to update in
-     * the database table.
      * @param {any} id - The id parameter is the unique identifier of the record that you want to update in
      * the database.
      * @returns the result of the updateById method with the parameters table, campo, and id.
      */
-    getQueryUpdateById(campo, id) {
-        return this.updateById(this.table, campo, id);
+    getQueryUpdateById(id) {
+        return this.updateById(this.table, id);
     }
 
     /**

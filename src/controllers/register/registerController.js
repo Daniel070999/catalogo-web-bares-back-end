@@ -17,12 +17,12 @@ const tableRegister = new TableRegister
 function updateRegisterAdminRolByRolSessionPermissionController(req, res) {
     session.obtainRol(req).then(rol => {
         if (rol === '3' && rol) {
-            const campoUpdate = tableRegister.rol;
             const idToUpdate = tableRegister.id_registro;
-            const query = tableRegister.getQueryUpdateById(campoUpdate, idToUpdate);
-            const campo = req.body.rol;
+            const query = tableRegister.getQueryUpdateById(idToUpdate);
+            const update = req.body.rol;
             const id = req.body.id_registro;
-            const values = [campo, id];
+            const setUpdate = { rol: update }
+            const values = [setUpdate, id];
             registerHelper.updateRegisterAdminRolByRolSessionPermissionHelper(query, values, (err, results) => {
                 if (err) {
                     res.status(500).json({ error: 'Error al actualizar: ' + err });

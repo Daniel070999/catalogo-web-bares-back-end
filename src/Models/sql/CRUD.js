@@ -34,15 +34,13 @@ class CRUD {
     /**
      * The function updates a specific field in a table based on the provided ID.
      * @param {String} table - The name of the table in the database that you want to update.
-     * @param {String} campo - The `campo` parameter represents the field or column in the table that you want
-     * to update.
      * @param {any} id - The `id` parameter is the identifier of the record that you want to update in the
      * specified table. It is used in the WHERE clause of the SQL query to identify the specific record
      * to be updated.
      * @returns The SQL query string that updates a specific field in a table based on the provided ID.
      */
-    updateById(table, campo, id) {
-        return this.sql = `UPDATE ${table} SET ${campo} = ? WHERE ${id} = ?`;
+    updateById(table, id) {
+        return this.sql = `UPDATE ${table} SET ? WHERE ${id} = ?`;
     }
 
     /**

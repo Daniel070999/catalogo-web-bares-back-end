@@ -37,12 +37,12 @@ function getUserByRolSessionPermissionController(req, res) {
 function updateUserAdminBarByRolSessionPermissionController(req, res) {
     session.obtainRol(req).then(rol => {
         if (rol === '3' && rol) {
-            const campoUpdate = tableUser.id_bar;
             const idToUpdate = tableUser.id_registro;
-            const query = tableUser.getQueryUpdateById(campoUpdate, idToUpdate);
-            const campo = req.body.id_bar;
+            const query = tableUser.getQueryUpdateById(idToUpdate);
             const id = req.body.id_registro;
-            const values = [campo, id];
+            const update = req.body.id_bar;
+            const setUpdate = { id_bar: update };
+            const values = [setUpdate, id];
             userHelper.updateUserAdminBarByRolSessionPermissionHelper(query, values, (err, results) => {
                 if (err) {
                     res.status(500).json({ error: 'Error al actualizar: ' + err });
