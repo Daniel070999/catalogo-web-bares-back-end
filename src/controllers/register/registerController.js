@@ -47,10 +47,10 @@ function updateRegisterAdminRolByRolSessionPermissionController(req, res) {
  * specific user.
  */
 function updateLoginFailedController(id_registro, intentos) {
-    const campoUpdate = tableRegister.intentoslogin;
     const idToUpdate = tableRegister.id_registro;
-    const query = tableRegister.getQueryUpdateById(campoUpdate, idToUpdate);
-    const values = [intentos, id_registro];
+    const query = tableRegister.getQueryUpdateById(idToUpdate);
+    const setUpdate = { intentoslogin: intentos };
+    const values = [setUpdate, id_registro];
     registerHelper.updateLoginFailedHelper(query, values, (err, results) => {
         if (err) {
             console.log('Error al actualizar: ' + err);

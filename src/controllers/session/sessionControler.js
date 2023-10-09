@@ -82,6 +82,7 @@ function signUpAuxInsertUser(req, idRegister) {
     return new Promise((resolve, reject) => {
         const user = new User();
         user.setNombre = req.body.nombre;
+        user.setApellido = req.body.apellido;
         user.setGenero = req.body.genero;
         user.setTelefono = req.body.telefono;
         user.setFechanacimiento = req.body.fechanacimiento;

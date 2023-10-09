@@ -119,7 +119,7 @@ function getBarBySessionIdController(req, res) {
       if (err) {
         res.status(500).json({ error: 'Error al obtener el id del bar ' + err });
       } else {
-        res.status(200).json(result);
+        res.status(200).json({ message: result });
       }
     });
   }).catch(error => {
@@ -147,7 +147,7 @@ function getAllBarByIdController(req, res) {
     if (err) {
       res.status(500).json({ error: 'Error al registrar ' + err });
     } else {
-      res.status(200).json(result);
+      res.status(200).json({ message: result });
     }
   });
 }

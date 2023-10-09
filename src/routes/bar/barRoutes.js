@@ -7,9 +7,9 @@ const upload = multer({ storage: storage });
 
 router.get('/bars', barController.getBarsController);//ok
 router.get('/barslocations', barController.getBarsLocationController);//ok
-router.get('/barbysessionid', barController.getBarBySessionIdController);//ok
-router.get('/allbarbyid', barController.getAllBarByIdController);//ok
+router.post('/allbarbyid', barController.getAllBarByIdController);//ok
 
+router.post('/barbysessionid', barController.getBarBySessionIdController);//ok
 router.post('/newbar', upload.single('logo'), barController.insertBarController);//ok
 
 module.exports = router;

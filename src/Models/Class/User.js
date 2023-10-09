@@ -1,8 +1,9 @@
 class User {
 
-    constructor(id_usuario, nombre, genero, telefono, fechanacimiento, id_registro, id_bar) {
+    constructor(id_usuario, nombre, apellido, genero, telefono, fechanacimiento, id_registro, id_bar) {
         this.id_usuario = id_usuario;
         this.nombre = nombre;
+        this.apellido = apellido;
         this.genero = genero;
         this.telefono = telefono;
         this.fechanacimiento = fechanacimiento;
@@ -24,6 +25,14 @@ class User {
 
     set setNombre(in_nombre) {
         this.nombre = in_nombre;
+    }
+
+    get getApellido() {
+        return this.apellido;
+    }
+
+    set setApellido(in_apellido) {
+        this.apellido = in_apellido;
     }
 
     get getGenero() {
@@ -80,6 +89,9 @@ class User {
         if (this.nombre) {
             data.push(this.nombre);
         }
+        if (this.apellido) {
+            data.push(this.apellido);
+        }
         if (this.genero) {
             data.push(this.genero);
         }
@@ -108,6 +120,9 @@ class User {
         }
         if (this.nombre) {
             data.nombre = this.nombre;
+        }
+        if (this.apellido) {
+            data.apellido = this.apellido;
         }
         if (this.genero) {
             data.genero = this.genero;

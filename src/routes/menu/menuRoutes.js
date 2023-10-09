@@ -5,8 +5,7 @@ const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-router.get('/menubybarid', menuController.getMenuByBarIdController);
-
+router.post('/menubybarid', menuController.getMenuByBarIdController);
 router.post('/newmenu', upload.single('image'), menuController.insertMenuController);
 
 module.exports = router;

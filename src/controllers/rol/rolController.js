@@ -56,7 +56,7 @@ function getBarAdminRolByRolSessionController(req, res) {
                 if (err) {
                     res.status(500).json({ error: 'Error al buscar ' + err });
                 } else {
-                    res.status(200).json(results);
+                    res.status(200).json({ message: results });
                 }
             });
         } else {

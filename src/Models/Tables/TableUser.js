@@ -5,6 +5,7 @@ class TableUser extends CRUD {
     table = 'tusuarios';
     id_usuario = 'id_usuario';
     nombre = 'nombre';
+    apellido = 'apellido';
     genero = 'genero';
     telefono = 'telefono';
     fechanacimiento = 'fechanacimiento';
@@ -12,7 +13,7 @@ class TableUser extends CRUD {
     id_bar = 'id_bar';
 
     get columns() {
-        return [this.id_usuario, this.nombre, this.genero, this.telefono, this.fechanacimiento, this.id_registro, this.id_bar];
+        return [this.id_usuario, this.nombre, this.apellido, this.genero, this.telefono, this.fechanacimiento, this.id_registro, this.id_bar];
     }
 
     /**
