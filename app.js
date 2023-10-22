@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const barRoutes = require('./components/bar/barRoutes');
 const menuRoutes = require('./components/menu/menuRoutes');
 const promotionRoutes = require('./components/promotion/promotionRoutes');
+const eventRoutes = require('./components/event/eventRoutes');
 const sessionRoutes = require('./components/session/sessionRoute');
 const userRoutes = require('./components/user/userRoutes');
 const rolRoutes = require('./components/rol/rolRoute');
@@ -36,6 +37,9 @@ app.use('/menu', menuRoutes)//ok
 
 //ruta de promocion
 app.use('/promotion', promotionRoutes)//ok
+
+//ruta de eventos
+app.use('/event', eventRoutes)//ok
 
 //verificaSession
 app.use('/check', security);//ok

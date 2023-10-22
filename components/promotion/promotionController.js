@@ -42,16 +42,19 @@ function getPromotionByBarIdController(req, res) {
  * the client. It is an instance of the Express `Response` object.
  */
 function insertPromotionController(req, res) {
+    const info = JSON.parse(req.body.data);
     const file = req.file;
     if (!file) {
         res.status(500).json({ error: 'no se ha seleccionado la imagen' });
     } else {
+        const fechaInicio = getFormatDate(info.fecha_inicio, info.hora_inicio);
+        const fechaFin = getFormatDate(info.fecha_fin, info.hora_fin);
         const promotion = new Promotion();
-        promotion.setNombre = req.body.nombre;
-        promotion.setDescripcion = req.body.descripcion;
-        promotion.setFecha_inicio = req.body.fecha_inicio;
-        promotion.setFecha_fin = req.body.fecha_fin;
-        promotion.setId_bar = req.body.id_bar;
+        promotion.setNombre = info.nombre;
+        promotion.setDescripcion = info.descripcion;
+        promotion.setFecha_inicio = fechaInicio;
+        promotion.setFecha_fin = fechaFin;
+        promotion.setId_bar = info.id_bar;
         const data = promotion.object();
         const query = tablePromotion.getQueryInsert();
         promotionHelper.insertPromotionHelper(query, data, file, (err, result) => {
@@ -62,6 +65,15 @@ function insertPromotionController(req, res) {
             }
         });
     }
+}
+
+function getFormatDate(fecha, hora) {
+    const fecha_ = new Date(fecha);
+    const [hora_, minutos_] = hora.split(':');
+    const year = fecha_.getFullYear();
+    const month = (fecha_.getMonth() + 1).toString().padStart(2, '0');
+    const day = fecha_.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day} ${hora_}:${minutos_}`;
 }
 
 module.exports = {

@@ -1,18 +1,17 @@
 const CRUD = require('../sql/CRUD');
 
-class TablePromotion extends CRUD {
+class TableEvent extends CRUD {
 
-    table = 'tpromociones';
-    id_promocion = 'id_promocion';
+    table = 'teventos';
+    id_evento = 'id_evento';
     nombre = 'nombre';
     descripcion = 'descripcion';
-    fecha_inicio = 'fecha_inicio';
-    fecha_fin = 'fecha_fin';
+    fecha = 'fecha';
     id_bar = 'id_bar';
     image = 'image';
 
     get columns() {
-        return [this.id_promocion, this.nombre, this.descripcion, this.fecha_inicio, this.fecha_fin, this.id_bar, this.image];
+        return [this.id_evento, this.nombre, this.descripcion, this.fecha, this.id_bar, this.image];
     }
 
     /**
@@ -66,4 +65,4 @@ class TablePromotion extends CRUD {
     }
 }
 
-module.exports = TablePromotion;
+module.exports = TableEvent;
