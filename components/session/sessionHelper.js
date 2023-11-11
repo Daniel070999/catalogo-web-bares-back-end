@@ -152,9 +152,21 @@ const logOutHelper = (res, callback) => {
 };
 
 
+const dataSessionHelper = (query, value, callback) => {
+    connection.query(query, value, (err, results)=>{
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+    });
+    
+};
+
 module.exports = {
     loginHelper,
     insertRegisterHelper,
     insertUserHelper,
-    logOutHelper
+    logOutHelper,
+    dataSessionHelper
 };

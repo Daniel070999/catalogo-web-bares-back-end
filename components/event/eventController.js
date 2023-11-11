@@ -54,7 +54,7 @@ function insertEventController(req, res) {
         event.setId_bar = info.id_bar;
         const data = event.object();
         const query = tableEvent.getQueryInsert();
-        eventHelper.inserteventHelper(query, data, file, (err, result) => {
+        eventHelper.insertEventHelper(query, data, file, (err, result) => {
             if (err) {
                 res.status(500).json({ error: 'Error al registrar ' + err });
             } else {

@@ -1,4 +1,5 @@
 const sessionHelper = require('./sessionHelper');
+const session = require('../../security/authorize');
 
 const TableRegister = require('../register/TableRegister');
 const TableUser = require('../user/TableUser');
@@ -118,8 +119,29 @@ function logOutController(req, res) {
     });
 }
 
+function dataSessionController(req, res) {
+    session.obtainId(req).then(response => {
+        const id_registro = response;
+        const idToFind = tableUser.id_registro;
+        const columns = tableUser.columns;
+        const query = tableUser.getQueryObtainRegistersById(idToFind);
+        const values = [columns, id_registro];
+        sessionHelper.dataSessionHelper(query, values, (err, result) => {
+            if (err) {
+                res.status(500).json({ error: 'Error obtener la información: ' + err });
+            } else {
+                res.status(200).json({ message: result });
+            }
+        });
+    }).catch(error => {
+        res.status(401).json({ error: error.message });
+    });
+
+}
+
 module.exports = {
     logInController,
     signUpController,
     logOutController,
+    dataSessionController
 };
