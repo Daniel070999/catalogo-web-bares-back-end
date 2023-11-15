@@ -7,5 +7,6 @@ const upload = multer({ storage: storage });
 
 router.post('/promotionbybarid', promotionController.getPromotionByBarIdController);
 router.post('/newpromotion', upload.single('image'), promotionController.insertPromotionController);
+router.post('/update', promotionController.updatePromotionController);
 
 module.exports = router;

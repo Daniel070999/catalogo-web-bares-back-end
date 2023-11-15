@@ -55,6 +55,23 @@ function obtainRol(req) {
     });
 }
 
+function onlyAdminPermission(req, res, next) {
+    const token = req.header('Authorization');
+    if (!token) {
+        return res.status(401).json({ message: 'No ha iniciado sesion' });
+    }
+    authorize()(req, {}, () => {
+        if (req.auth) {
+            const rol = req.auth.rol;
+            if (rol === '2') {
+                next();
+            }
+        } else {
+            return res.status(401).json({ message: 'Token de acceso inválido' });
+        }
+    });
+}
+
 function verifyLoggin(req, res, next) {
     let rolAuth;
     try {
@@ -78,5 +95,6 @@ module.exports = {
     authorize,
     verifyLoggin,
     obtainId,
-    obtainRol
+    obtainRol,
+    onlyAdminPermission
 };

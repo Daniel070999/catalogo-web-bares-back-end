@@ -67,6 +67,10 @@ function insertPromotionController(req, res) {
     }
 }
 
+function updatePromotionController(req, res) {
+    console.log(req.body);
+}
+
 function getFormatDate(fecha, hora) {
     const fecha_ = new Date(fecha);
     const [hora_, minutos_] = hora.split(':');
@@ -78,5 +82,6 @@ function getFormatDate(fecha, hora) {
 
 module.exports = {
     insertPromotionController,
-    getPromotionByBarIdController
+    getPromotionByBarIdController,
+    updatePromotionController
 }

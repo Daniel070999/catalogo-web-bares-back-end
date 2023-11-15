@@ -63,7 +63,34 @@ function insertMenuController(req, res) {
     }
 }
 
+function updateMenuController(req, res) {
+
+    const file = req.file;
+    if (!file) {
+        res.status(500).json({ error: 'no se ha seleccionado la imagen' });
+    } else {
+        const menu = new Menu();
+        menu.setNombre = req.body.nombre;
+        menu.setDescripcion = req.body.descripcion;
+        menu.setPrecio = req.body.precio;
+        const id = req.body.id_menu;
+        const data = menu.object();
+        const oldImage = req.body.old_image;
+        const values = [data, id];
+        const idToFind = tableMenu.id_menu;
+        const query = tableMenu.getQueryUpdateById(idToFind);
+        menuHelper.updateMenuHelper(query, values, oldImage, file, (err, result) => {
+            if (err) {
+                res.status(500).json({ error: 'Error al actualizar ' + err });
+            } else {
+                res.status(200).json({ message: 'Menu actualizado: ' + result });
+            }
+        });
+    }
+}
+
 module.exports = {
     insertMenuController,
-    getMenuByBarIdController
+    getMenuByBarIdController,
+    updateMenuController
 }

@@ -56,7 +56,42 @@ function insertMenuHelper(query, data, file, callback) {
     });
 }
 
+function updateMenuHelper(query, values, oldImage, file, callback) {
+    //primero se elimina la imagen que tenia
+    deleteImageMenu(oldImage);
+    //
+    const fileName = `${Date.now()}_${file.originalname}`;
+    const imagePath = `uploads/images/menu/${fileName}`;
+    const image = fileName;
+    fs.writeFile(imagePath, file.buffer, (err) => {
+        if (err) {
+            return callback('Error al guardar la imagen en el servidor', null);
+        } else {
+            const finalData = Object.assign(values, { image: image });
+            connection.query(query, finalData, (err, results) => {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    console.log(results);
+                    callback(null, results.message);
+                }
+            });
+        }
+    });
+}
+
+// Función para eliminar una imagen por su nombre de archivo
+function deleteImageMenu(imageName) {
+    const imagePath = `uploads/images/menu/${imageName}`;
+    fs.unlink(imagePath, (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
+}
+
 module.exports = {
     insertMenuHelper,
-    getMenuByBarIdHelper
+    getMenuByBarIdHelper,
+    updateMenuHelper
 }
