@@ -6,6 +6,8 @@ const tablePromotion = new TablePromotion();
 
 const Promotion = require('./Promotion');
 
+const tools = require('../../utils/tools');
+
 /**
  * The function `getPromotionByBarIdController` retrieves Promotion items based on a bar ID and sends the result
  * as a JSON response.
@@ -47,8 +49,8 @@ function insertPromotionController(req, res) {
     if (!file) {
         res.status(500).json({ error: 'no se ha seleccionado la imagen' });
     } else {
-        const fechaInicio = getFormatDate(info.fecha_inicio, info.hora_inicio);
-        const fechaFin = getFormatDate(info.fecha_fin, info.hora_fin);
+        const fechaInicio = tools.getFormatDate(info.fecha_inicio, info.hora_inicio);
+        const fechaFin = tools.getFormatDate(info.fecha_fin, info.hora_fin);
         const promotion = new Promotion();
         promotion.setNombre = info.nombre;
         promotion.setDescripcion = info.descripcion;
@@ -68,16 +70,30 @@ function insertPromotionController(req, res) {
 }
 
 function updatePromotionController(req, res) {
-    console.log(req.body);
-}
-
-function getFormatDate(fecha, hora) {
-    const fecha_ = new Date(fecha);
-    const [hora_, minutos_] = hora.split(':');
-    const year = fecha_.getFullYear();
-    const month = (fecha_.getMonth() + 1).toString().padStart(2, '0');
-    const day = fecha_.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day} ${hora_}:${minutos_}`;
+    const file = req.file;
+    if (!file) {
+        res.status(500).json({ error: 'no se ha seleccionado la imagen' });
+    } else {
+        const fechaInicio = tools.getFormatDate(req.body.fecha_inicio, req.body.hora_inicio);
+        const fechaFin = tools.getFormatDate(req.body.fecha_fin, req.body.hora_fin);
+        const promotion = new Promotion();
+        promotion.setNombre = req.body.nombre;
+        promotion.setDescripcion = req.body.descripcion;
+        promotion.setFecha_inicio = fechaInicio;
+        promotion.setFecha_fin = fechaFin;
+        const id = req.body.id_promocion;
+        const data = promotion.object();
+        const oldImage = req.body.old_image;
+        const idToFind = tablePromotion.id_promocion;
+        const query = tablePromotion.getQueryUpdateById(idToFind);
+        promotionHelper.updatePromotionHelper(query, data, id, oldImage, file, (err, result) => {
+            if (err) {
+                res.status(500).json({ error: 'Error al actualizar ' + err });
+            } else {
+                res.status(200).json({ message: 'Menu actualizado: ' + result });
+            }
+        });
+    }
 }
 
 module.exports = {

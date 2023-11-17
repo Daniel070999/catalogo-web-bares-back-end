@@ -152,10 +152,35 @@ function getAllBarByIdController(req, res) {
   });
 }
 
+function updateBarController(req, res) {
+  const file = req.file;
+  if (!file) {
+    res.status(500).json({ error: 'no se ha seleccionado la imagen' });
+  } else {
+    const bar = new Bar();
+    bar.setNombre = req.body.nombre;
+    bar.setDescripcion = req.body.descripcion;
+    bar.setLema = req.body.lema;
+    const id = req.body.id_bar;
+    const data = bar.object();
+    const oldLogo = req.body.old_logo;
+    const idToFind = tableBar.id_bar;
+    const query = tableBar.getQueryUpdateById(idToFind);
+    barHelper.updateBarHelper(query, data, id, oldLogo, file, (err, result) => {
+      if (err) {
+        res.status(500).json({ error: 'Error al actualizar ' + err });
+      } else {
+        res.status(200).json({ message: 'Menu actualizado: ' + result });
+      }
+    });
+  }
+}
+
 module.exports = {
   getBarsController,
   getBarsLocationController,
   insertBarController,
   getBarBySessionIdController,
-  getAllBarByIdController
+  getAllBarByIdController,
+  updateBarController
 };

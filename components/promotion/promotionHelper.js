@@ -1,5 +1,8 @@
 const connection = require('../../config/database');
 const fs = require('fs');
+const parameters = require('../../utils/parameters');
+const tools = require('../../utils/tools');
+const promotionPath = parameters.filesPath.images.promocion;
 
 /**
  * The function `getPromotionByBarIdHelper` is a helper function that executes a database query and returns
@@ -56,7 +59,32 @@ function insertPromotionHelper(query, data, file, callback) {
     });
 }
 
+function updatePromotionHelper(query, data, id, oldImage, file, callback) {
+    //primero se elimina la imagen que tenia
+    tools.deleteFiles(promotionPath.concat(oldImage));
+    //
+    const fileName = `${Date.now()}_${file.originalname}`;
+    const imagePath = promotionPath.concat(fileName);
+    const image = fileName;
+    fs.writeFile(imagePath, file.buffer, (err) => {
+        if (err) {
+            return callback('Error al guardar la imagen en el servidor', null);
+        } else {
+            const finalData = [Object.assign(Object.assign(data, { image: image })), id];
+            connection.query(query, finalData, (err, results) => {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, results.message);
+                }
+            });
+        }
+    });
+}
+
+
 module.exports = {
     insertPromotionHelper,
-    getPromotionByBarIdHelper
+    getPromotionByBarIdHelper,
+    updatePromotionHelper
 }

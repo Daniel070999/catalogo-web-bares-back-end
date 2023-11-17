@@ -2,6 +2,10 @@ const connection = require('../../config/database');
 const jwt = require('jsonwebtoken');
 const security = require('../../security/bcrypt');
 const registerController = require('../register/registerController');
+const parameters = require('../../utils/parameters');
+
+const secret = parameters.generalPass;
+const generalIntentsLogin = parameters.intentosLogin;
 
 const Register = require('../register/Register');
 
@@ -43,17 +47,16 @@ function findIfExistUser(query, values) {
  */
 function loginHelper(values, data, userAndEmail, res, callback) {
 
-    const sqlFindUser = `SELECT ?? FROM ${data.tableRegister} WHERE (${data.usuario} = ? OR ${data.email} = ?)`;
     const sqlVerifyUser = `SELECT COUNT(*) count FROM ${data.tableRegister} WHERE (${data.usuario} = ? OR ${data.email} = ?)`;
-
     findIfExistUser(sqlVerifyUser, userAndEmail).then(response => {
         if (response) {
+            const sqlFindUser = `SELECT ?? FROM ${data.tableRegister} WHERE (${data.usuario} = ? OR ${data.email} = ?)`;
             connection.query(sqlFindUser, values, async (err, results) => {
                 if (err) {
                     callback(err, null);
                 } else {
                     const intentsLogin = results[0].intentoslogin;
-                    if (intentsLogin <= 2) {
+                    if (intentsLogin <= generalIntentsLogin) {
                         const verify = await security.compare(data.pass, results[0].clave);
                         if (verify) {
                             const register = new Register();
@@ -62,7 +65,7 @@ function loginHelper(values, data, userAndEmail, res, callback) {
                             register.setEmail = results[0].email;
                             register.setRol = results[0].rol;
                             const datosLogin = register.object();
-                            const token = jwt.sign(datosLogin, 'clavesecreta'/*, { expiresIn: '1h' }*/);
+                            const token = jwt.sign(datosLogin, secret/*, { expiresIn: '1h' }*/);
                             res.header('Authorization', `Bearer ${token}`);
                             const resultAux = results.map((obj) => ({ ...obj, Authorization: `Bearer ${token}`, cookie: token }));
                             if (intentsLogin != 0) {
@@ -70,7 +73,7 @@ function loginHelper(values, data, userAndEmail, res, callback) {
                             }
                             callback(null, resultAux);
                         } else {
-                            const intentos = 2 - results[0].intentoslogin;
+                            const intentos = generalIntentsLogin - results[0].intentoslogin;
                             const nuevoIntento = results[0].intentoslogin + 1;
                             callback(`Clave incorrecta, tiene ${intentos} intentos`);
                             registerController.updateLoginFailedController(results[0].id_registro, nuevoIntento);
@@ -153,14 +156,14 @@ const logOutHelper = (res, callback) => {
 
 
 const dataSessionHelper = (query, value, callback) => {
-    connection.query(query, value, (err, results)=>{
+    connection.query(query, value, (err, results) => {
         if (err) {
             callback(err, null);
         } else {
             callback(null, results);
         }
     });
-    
+
 };
 
 module.exports = {

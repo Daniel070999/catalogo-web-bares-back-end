@@ -1,5 +1,8 @@
 const connection = require('../../config/database');
 const fs = require('fs');
+const parameters = require('../../utils/parameters');
+const tools = require('../../utils/tools');
+const barLogoPath = parameters.filesPath.images.bar_logo;
 
 /**
  * The getBarsHelper function executes a database query using the provided query and values, and calls
@@ -124,10 +127,35 @@ function getAllBarByIdHelper(query, values, callback) {
   });
 }
 
+function updateBarHelper(query, data, id, oldLogo, file, callback) {
+  //primero se elimina la imagen que tenia
+  tools.deleteFiles(barLogoPath.concat(oldLogo));
+  //
+  const fileName = `${Date.now()}_${file.originalname}`;
+  const imagePath = barLogoPath.concat(fileName);
+  const logo = fileName;
+  fs.writeFile(imagePath, file.buffer, (err) => {
+    if (err) {
+      return callback('Error al guardar la imagen en el servidor', null);
+    } else {
+      const finalData = [Object.assign(Object.assign(data, { logo: logo })), id];
+      connection.query(query, finalData, (err, results) => {
+        if (err) {
+          callback(err, null);
+        } else {
+          callback(null, results.message);
+        }
+      });
+    }
+  });
+}
+
+
 module.exports = {
   getBarsHelper,
   getBarsLocationHelper,
   insertBarHelper,
   getBarBySessionIdHelper,
-  getAllBarByIdHelper
+  getAllBarByIdHelper,
+  updateBarHelper
 };

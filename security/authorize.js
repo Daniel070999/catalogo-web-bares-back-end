@@ -1,5 +1,6 @@
 const { expressjwt: expressJwt } = require('express-jwt');
-const secret = 'clavesecreta';
+const parameters = require('../utils/parameters');
+const secret = parameters.generalPass;
 
 /**
  * The function `authorize` returns a middleware function that uses JWT authentication with a secret

@@ -1,5 +1,9 @@
 const connection = require('../../config/database');
 const fs = require('fs');
+const parameters = require('../../utils/parameters');
+const tools = require('../../utils/tools');
+
+const eventPath = parameters.filesPath.images.evento;
 
 /**
  * The function `getEventByBarIdHelper` is a helper function that executes a database query and returns
@@ -38,7 +42,7 @@ function getEventByBarIdHelper(query, values, callback) {
  */
 function insertEventHelper(query, data, file, callback) {
     const fileName = `${Date.now()}_${file.originalname}`;
-    const imagePath = `uploads/images/evento/${fileName}`;
+    const imagePath = eventPath.concat(fileName);
     const image = fileName;
     fs.writeFile(imagePath, file.buffer, (err) => {
         if (err) {
@@ -56,7 +60,31 @@ function insertEventHelper(query, data, file, callback) {
     });
 }
 
+function updateEventHelper(query, data, id, oldImage, file, callback) {
+    //primero se elimina la imagen que tenia
+    tools.deleteFiles(eventPath.concat(oldImage));
+    //
+    const fileName = `${Date.now()}_${file.originalname}`;
+    const imagePath = eventPath.concat(fileName);
+    const image = fileName;
+    fs.writeFile(imagePath, file.buffer, (err) => {
+        if (err) {
+            return callback('Error al guardar la imagen en el servidor', null);
+        } else {
+            const finalData = [Object.assign(Object.assign(data, { image: image })), id];
+            connection.query(query, finalData, (err, results) => {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, results.message);
+                }
+            });
+        }
+    });
+}
+
 module.exports = {
     insertEventHelper,
-    getEventByBarIdHelper
+    getEventByBarIdHelper,
+    updateEventHelper
 }

@@ -64,7 +64,32 @@ function insertEventController(req, res) {
     }
 }
 
+function updateEventController(req, res) {
+    const file = req.file;
+    if (!file) {
+        res.status(500).json({ error: 'no se ha seleccionado la imagen' });
+    } else {
+        const event = new Event();
+        event.setNombre = req.body.nombre;
+        event.setDescripcion = req.body.descripcion;
+        event.setFecha = req.body.fecha;
+        const id = req.body.id_evento;
+        const data = event.object();
+        const oldImage = req.body.old_image;
+        const idToFind = tableEvent.id_evento;
+        const query = tableEvent.getQueryUpdateById(idToFind);
+        eventHelper.updateEventHelper(query, data, id, oldImage, file, (err, result) => {
+            if (err) {
+                res.status(500).json({ error: 'Error al actualizar ' + err });
+            } else {
+                res.status(200).json({ message: 'Menu actualizado: ' + result });
+            }
+        });
+    }
+}
+
 module.exports = {
     insertEventController,
-    getEventByBarIdController
+    getEventByBarIdController,
+    updateEventController
 }

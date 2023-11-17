@@ -1,6 +1,10 @@
 const connection = require('../../config/database');
 const fs = require('fs');
 
+const parameters = require('../../utils/parameters');
+const tools = require('../../utils/tools');
+const menuPath = parameters.filesPath.images.menu;
+
 /**
  * The function `getMenuByBarIdHelper` is a helper function that executes a database query and returns
  * the results or an error through a callback function.
@@ -56,23 +60,22 @@ function insertMenuHelper(query, data, file, callback) {
     });
 }
 
-function updateMenuHelper(query, values, oldImage, file, callback) {
+function updateMenuHelper(query, data, id, oldImage, file, callback) {
     //primero se elimina la imagen que tenia
-    deleteImageMenu(oldImage);
+    tools.deleteFiles(menuPath.concat(oldImage));
     //
     const fileName = `${Date.now()}_${file.originalname}`;
-    const imagePath = `uploads/images/menu/${fileName}`;
+    const imagePath = menuPath.concat(fileName);
     const image = fileName;
     fs.writeFile(imagePath, file.buffer, (err) => {
         if (err) {
             return callback('Error al guardar la imagen en el servidor', null);
         } else {
-            const finalData = Object.assign(values, { image: image });
+            const finalData = [Object.assign(Object.assign(data, { image: image })), id];
             connection.query(query, finalData, (err, results) => {
                 if (err) {
                     callback(err, null);
                 } else {
-                    console.log(results);
                     callback(null, results.message);
                 }
             });
@@ -80,15 +83,6 @@ function updateMenuHelper(query, values, oldImage, file, callback) {
     });
 }
 
-// Función para eliminar una imagen por su nombre de archivo
-function deleteImageMenu(imageName) {
-    const imagePath = `uploads/images/menu/${imageName}`;
-    fs.unlink(imagePath, (err) => {
-        if (err) {
-            console.log(err);
-        }
-    });
-}
 
 module.exports = {
     insertMenuHelper,
