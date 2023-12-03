@@ -1,6 +1,26 @@
 const fs = require('fs');
 
 /**
+ * Save a new image file
+ * @param file The file object to be saved.
+ * @returns 
+ */
+function saveNewImage(file, path) {
+    return new Promise((resolve, reject) => {
+        const fileName = `${Date.now()}_${file.originalname}`;
+        const imagePath = path.concat(fileName);
+
+        fs.writeFile(imagePath, file.buffer, (err) => {
+            if (err) {
+                reject(new Error('Error al guardar la imagen en el servidor'));
+            } else {
+                resolve(fileName);
+            }
+        });
+    });
+}
+
+/**
  * Función para eliminar una imagen por su nombre de archivo y path
  * @param imagePath path de la imagen
  */
@@ -29,5 +49,6 @@ function getFormatDate(fecha, hora) {
 
 module.exports = {
     deleteFiles,
-    getFormatDate
+    getFormatDate,
+    saveNewImage
 }

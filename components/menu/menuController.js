@@ -65,30 +65,43 @@ function insertMenuController(req, res) {
 
 function updateMenuController(req, res) {
     const file = req.file;
-    if (!file) {
-        res.status(500).json({ error: 'no se ha seleccionado la imagen' });
-    } else {
-        const menu = new Menu();
-        menu.setNombre = req.body.nombre;
-        menu.setDescripcion = req.body.descripcion;
-        menu.setPrecio = req.body.precio;
-        const id = req.body.id_menu;
-        const data = menu.object();
-        const oldImage = req.body.old_image;
-        const idToFind = tableMenu.id_menu;
-        const query = tableMenu.getQueryUpdateById(idToFind);
-        menuHelper.updateMenuHelper(query, data, id, oldImage, file, (err, result) => {
-            if (err) {
-                res.status(500).json({ error: 'Error al actualizar ' + err });
-            } else {
-                res.status(200).json({ message: 'Menu actualizado: ' + result });
-            }
-        });
-    }
+    const info = JSON.parse(req.body.data);
+    const menu = new Menu();
+    menu.setNombre = info.nombre;
+    menu.setDescripcion = info.descripcion;
+    menu.setPrecio = info.precio;
+    const id = info.id_menu;
+    const data = menu.object();
+    const oldImage = info.old_image;
+    const idToFind = tableMenu.id_menu;
+    const query = tableMenu.getQueryUpdateById(idToFind);
+    menuHelper.updateMenuHelper(query, data, id, oldImage, file, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Error al actualizar ' + err });
+        } else {
+            res.status(200).json({ message: 'Menu actualizado: ' + result });
+        }
+    });
+}
+
+function getMenuController(req, res) {
+    const idMenu = req.body.id_menu;
+    const idToFind = tableMenu.id_menu;
+    const columns = tableMenu.columns;
+    const values = [columns, idMenu]
+    const query = tableMenu.getQueryObtainRegistersById(idToFind);
+    menuHelper.getMenuByBarIdHelper(query, values, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Error al obtener los datos ' + err });
+        } else {
+            res.status(200).json({ message: result });
+        }
+    });
 }
 
 module.exports = {
     insertMenuController,
     getMenuByBarIdController,
-    updateMenuController
+    updateMenuController,
+    getMenuController
 }

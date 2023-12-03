@@ -73,9 +73,9 @@ function loginHelper(values, data, userAndEmail, res, callback) {
                             }
                             callback(null, resultAux);
                         } else {
-                            const intentos = generalIntentsLogin - results[0].intentoslogin;
+                            //const intentos = generalIntentsLogin - results[0].intentoslogin;
                             const nuevoIntento = results[0].intentoslogin + 1;
-                            callback(`Clave incorrecta, tiene ${intentos} intentos`);
+                            callback(`Los datos ingresados son incorrectos`);
                             registerController.updateLoginFailedController(results[0].id_registro, nuevoIntento);
                         }
                     } else {
@@ -84,7 +84,7 @@ function loginHelper(values, data, userAndEmail, res, callback) {
                 }
             });
         } else {
-            callback(`El usuario o email no existe`);
+            callback(`Los datos ingresados son incorrectos`);
         }
     }).catch(error => {
         callback(error);

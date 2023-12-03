@@ -66,6 +66,8 @@ function onlyAdminPermission(req, res, next) {
             const rol = req.auth.rol;
             if (rol === '2') {
                 next();
+            }else{
+                return res.status(401).json({ message: 'Usuario no autorizado' });
             }
         } else {
             return res.status(401).json({ message: 'Token de acceso inválido' });
