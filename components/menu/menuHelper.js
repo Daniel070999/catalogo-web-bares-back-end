@@ -79,10 +79,21 @@ async function updateMenuHelper(query, data, id, oldImage, file, callback) {
     });
 }
 
+function deleteMenuHelper(query, id, callback) {
+    connection.query(query, id, (err, result) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, result.affectedRows);
+        }
+    });
+}
+
 
 
 module.exports = {
     insertMenuHelper,
     getMenuByBarIdHelper,
-    updateMenuHelper
+    updateMenuHelper,
+    deleteMenuHelper
 }

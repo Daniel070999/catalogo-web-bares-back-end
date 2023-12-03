@@ -99,9 +99,23 @@ function getMenuController(req, res) {
     });
 }
 
+function deleteMenuController(req, res){
+    const idMenu = [req.body.id_menu];
+    const idToDelete = tableMenu.id_menu;
+    const query = tableMenu.getQueryDeleteById(idToDelete);
+    menuHelper.deleteMenuHelper(query, idMenu, (err, result)=>{
+        if (err) {
+            res.status(500).json({ error: 'Error al eliminar ' + err });
+        } else {
+            res.status(200).json({ message: result });
+        }
+    });
+}
+
 module.exports = {
     insertMenuController,
     getMenuByBarIdController,
     updateMenuController,
-    getMenuController
+    getMenuController,
+    deleteMenuController
 }

@@ -10,5 +10,6 @@ router.post('/menubybarid', menuController.getMenuByBarIdController);
 router.post('/newmenu', upload.single('image'), menuController.insertMenuController);
 router.post('/update', security.onlyAdminPermission, upload.single('image'), menuController.updateMenuController);
 router.post('/menubyid', security.onlyAdminPermission, menuController.getMenuController);
+router.post('/delete', security.onlyAdminPermission, menuController.deleteMenuController);
 
 module.exports = router;
