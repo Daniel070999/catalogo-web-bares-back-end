@@ -59,32 +59,37 @@ function insertPromotionHelper(query, data, file, callback) {
     });
 }
 
-function updatePromotionHelper(query, data, id, oldImage, file, callback) {
-    //primero se elimina la imagen que tenia
-    tools.deleteFiles(promotionPath.concat(oldImage));
-    //
-    const fileName = `${Date.now()}_${file.originalname}`;
-    const imagePath = promotionPath.concat(fileName);
-    const image = fileName;
-    fs.writeFile(imagePath, file.buffer, (err) => {
+async function updatePromotionHelper(query, data, id, oldImage, file, callback) {
+    let image;
+    let finalData;
+    if (file) {
+        tools.deleteFiles(promotionPath.concat(oldImage));
+        image = await tools.saveNewImage(file, promotionPath);
+        finalData = [Object.assign(Object.assign(data, { image: image })), id];
+    } else {
+        finalData = [data, id];
+    }
+    connection.query(query, finalData, (err, results) => {
         if (err) {
-            return callback('Error al guardar la imagen en el servidor', null);
+            callback(err, null);
         } else {
-            const finalData = [Object.assign(Object.assign(data, { image: image })), id];
-            connection.query(query, finalData, (err, results) => {
-                if (err) {
-                    callback(err, null);
-                } else {
-                    callback(null, results.message);
-                }
-            });
+            callback(null, results.message);
+        }
+    });
+}
+function deletePromotionHelper(query, id, callback) {
+    connection.query(query, id, (err, result) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, result.affectedRows);
         }
     });
 }
 
-
 module.exports = {
     insertPromotionHelper,
     getPromotionByBarIdHelper,
-    updatePromotionHelper
+    updatePromotionHelper,
+    deletePromotionHelper
 }

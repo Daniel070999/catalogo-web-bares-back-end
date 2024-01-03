@@ -71,33 +71,60 @@ function insertPromotionController(req, res) {
 
 function updatePromotionController(req, res) {
     const file = req.file;
-    if (!file) {
-        res.status(500).json({ error: 'no se ha seleccionado la imagen' });
-    } else {
-        const fechaInicio = tools.getFormatDate(req.body.fecha_inicio, req.body.hora_inicio);
-        const fechaFin = tools.getFormatDate(req.body.fecha_fin, req.body.hora_fin);
-        const promotion = new Promotion();
-        promotion.setNombre = req.body.nombre;
-        promotion.setDescripcion = req.body.descripcion;
-        promotion.setFecha_inicio = fechaInicio;
-        promotion.setFecha_fin = fechaFin;
-        const id = req.body.id_promocion;
-        const data = promotion.object();
-        const oldImage = req.body.old_image;
-        const idToFind = tablePromotion.id_promocion;
-        const query = tablePromotion.getQueryUpdateById(idToFind);
-        promotionHelper.updatePromotionHelper(query, data, id, oldImage, file, (err, result) => {
-            if (err) {
-                res.status(500).json({ error: 'Error al actualizar ' + err });
-            } else {
-                res.status(200).json({ message: 'Menu actualizado: ' + result });
-            }
-        });
-    }
+    const info = JSON.parse(req.body.data);
+    const fechaInicio = tools.getFormatDate(info.fecha_inicio, info.hora_inicio);
+    const fechaFin = tools.getFormatDate(info.fecha_fin, info.hora_fin);
+    const promotion = new Promotion();
+    promotion.setNombre = info.nombre;
+    promotion.setDescripcion = info.descripcion;
+    promotion.setFecha_inicio = fechaInicio;
+    promotion.setFecha_fin = fechaFin;
+    const id = info.id_promocion;
+    const data = promotion.object();
+    const oldImage = info.old_image;
+    const idToFind = tablePromotion.id_promocion;
+    const query = tablePromotion.getQueryUpdateById(idToFind);
+    promotionHelper.updatePromotionHelper(query, data, id, oldImage, file, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Error al actualizar ' + err });
+        } else {
+            res.status(200).json({ message: 'Menu actualizado: ' + result });
+        }
+    });
+}
+
+function getPromotionController(req, res) {
+    const idPromocion = req.body.id_promocion;
+    const idToFind = tablePromotion.id_promocion;
+    const columns = tablePromotion.columns;
+    const values = [columns, idPromocion]
+    const query = tablePromotion.getQueryObtainRegistersById(idToFind);
+    promotionHelper.getPromotionByBarIdHelper(query, values, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Error al obtener los datos ' + err });
+        } else {
+            res.status(200).json({ message: result });
+        }
+    });
+}
+
+function deletePromotionController(req, res) {
+    const idPromocion = [req.body.id_promocion];
+    const idToDelete = tablePromotion.id_promocion;
+    const query = tablePromotion.getQueryDeleteById(idToDelete);
+    promotionHelper.deletePromotionHelper(query, idPromocion, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Error al eliminar ' + err });
+        } else {
+            res.status(200).json({ message: result });
+        }
+    });
 }
 
 module.exports = {
     insertPromotionController,
     getPromotionByBarIdController,
-    updatePromotionController
+    updatePromotionController,
+    getPromotionController,
+    deletePromotionController
 }
