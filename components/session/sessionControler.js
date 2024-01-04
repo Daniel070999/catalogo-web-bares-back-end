@@ -119,6 +119,14 @@ function logOutController(req, res) {
     });
 }
 
+/**
+ * The function `dataSessionController` obtains a session ID from a request, uses it to find a
+ * corresponding user ID, and then retrieves information from a database based on that user ID.
+ * @param req - The `req` parameter is the request object that contains information about the HTTP
+ * request made by the client. It includes details such as the request method, headers, and body.
+ * @param res - The `res` parameter is the response object that is used to send the response back to
+ * the client. It is an instance of the Express `Response` object.
+ */
 function dataSessionController(req, res) {
     session.obtainId(req).then(response => {
         const id_registro = response;
@@ -136,7 +144,6 @@ function dataSessionController(req, res) {
     }).catch(error => {
         res.status(401).json({ error: error.message });
     });
-
 }
 
 module.exports = {

@@ -152,6 +152,14 @@ function getAllBarByIdController(req, res) {
   });
 }
 
+/**
+ * The function `updateBarController` updates a bar's information and logo based on the request
+ * parameters and file.
+ * @param req - The `req` parameter is the request object, which contains information about the
+ * incoming HTTP request, such as the request headers, request body, and request parameters.
+ * @param res - The `res` parameter is the response object that is used to send the response back to
+ * the client. It is an instance of the Express `Response` object.
+ */
 function updateBarController(req, res) {
   const file = req.file;
   if (!file) {

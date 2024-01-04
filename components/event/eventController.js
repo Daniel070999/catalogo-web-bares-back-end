@@ -64,6 +64,16 @@ function insertEventController(req, res) {
     }
 }
 
+/**
+ * The function `updateEventController` handles the updating of an event by receiving a file,
+ * extracting data from the request body, and calling a helper function to update the event in the
+ * database.
+ * @param req - The `req` parameter is the request object that contains information about the HTTP
+ * request made by the client. It includes properties such as `req.file` (the uploaded file),
+ * `req.body` (the request body), and `req.params` (the route parameters).
+ * @param res - The `res` parameter is the response object that is used to send the response back to
+ * the client. It is an instance of the Express `Response` object.
+ */
 function updateEventController(req, res) {
     const file = req.file;
     if (!file) {

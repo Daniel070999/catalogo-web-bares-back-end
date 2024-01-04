@@ -60,6 +60,22 @@ function insertMenuHelper(query, data, file, callback) {
     });
 }
 
+/**
+ * The function `updateMenuHelper` is an asynchronous function that updates a menu item in a database,
+ * including updating the image if a new image file is provided.
+ * @param query - The SQL query to update the menu item in the database.
+ * @param data - The `data` parameter is an object that contains the updated menu information. It could
+ * include properties such as the menu name, description, price, etc.
+ * @param id - The `id` parameter is the identifier of the menu item that needs to be updated. It is
+ * used to specify which menu item should be updated in the database.
+ * @param oldImage - The old image file name that needs to be deleted.
+ * @param file - The `file` parameter is a file object that represents the new image file that is being
+ * uploaded.
+ * @param callback - The `callback` parameter is a function that will be called once the update
+ * operation is completed. It takes two parameters: `err` and `results`. If an error occurs during the
+ * update operation, `err` will contain the error object, otherwise it will be `null`. If the update
+ * operation
+ */
 async function updateMenuHelper(query, data, id, oldImage, file, callback) {
     let image;
     let finalData;
@@ -79,6 +95,17 @@ async function updateMenuHelper(query, data, id, oldImage, file, callback) {
     });
 }
 
+/**
+ * The deleteMenuHelper function executes a SQL query to delete a menu item from a database table and
+ * returns the number of affected rows.
+ * @param query - The SQL query to be executed for deleting the menu item(s).
+ * @param id - The `id` parameter is the identifier of the menu item that you want to delete from the
+ * database. It is used to specify which row(s) should be deleted based on their unique identifier.
+ * @param callback - The `callback` parameter is a function that will be called once the query is
+ * executed. It takes two parameters: `err` and `result`. If an error occurs during the query
+ * execution, the `err` parameter will contain the error object, otherwise it will be `null`. If the
+ * query
+ */
 function deleteMenuHelper(query, id, callback) {
     connection.query(query, id, (err, result) => {
         if (err) {
@@ -88,8 +115,6 @@ function deleteMenuHelper(query, id, callback) {
         }
     });
 }
-
-
 
 module.exports = {
     insertMenuHelper,

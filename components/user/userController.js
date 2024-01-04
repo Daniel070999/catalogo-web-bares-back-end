@@ -19,7 +19,7 @@ function getUserByRolSessionPermissionController(req, res) {
         if (rol === '3' && rol) {
             const query = tableUser.getQueryObtainRegisters();
             const values = [tableUser.columns];
-            userHelper.getUserByRolSessionPermissionHelper(query, values, (err, results) => {
+            userHelper.executeScript(query, values, (err, results) => {
                 if (err) {
                     res.status(500).json({ error: 'Error al obtener los usuarios: ' + err });
                 } else {
@@ -34,6 +34,15 @@ function getUserByRolSessionPermissionController(req, res) {
     });
 }
 
+/**
+ * The function `updateUserAdminBarByRolSessionPermissionController` updates the `id_bar` field of a
+ * user's record in the database based on the user's role and session permissions.
+ * @param req - The req parameter is the request object that contains information about the HTTP
+ * request made by the client. It includes data such as the request headers, request parameters,
+ * request body, etc.
+ * @param res - The `res` parameter is the response object that is used to send the response back to
+ * the client. It is an instance of the Express `Response` object.
+ */
 function updateUserAdminBarByRolSessionPermissionController(req, res) {
     session.obtainRol(req).then(rol => {
         if (rol === '3' && rol) {
@@ -43,7 +52,7 @@ function updateUserAdminBarByRolSessionPermissionController(req, res) {
             const update = req.body.id_bar;
             const setUpdate = { id_bar: update };
             const values = [setUpdate, id];
-            userHelper.updateUserAdminBarByRolSessionPermissionHelper(query, values, (err, results) => {
+            userHelper.executeScript(query, values, (err, results) => {
                 if (err) {
                     res.status(500).json({ error: 'Error al actualizar: ' + err });
                 } else {

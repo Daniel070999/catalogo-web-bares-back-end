@@ -60,10 +60,24 @@ function insertEventHelper(query, data, file, callback) {
     });
 }
 
+/**
+ * The function `updateEventHelper` updates an event by deleting the old image, saving a new image, and
+ * updating the event data in the database.
+ * @param query - The SQL query to update the event in the database.
+ * @param data - The `data` parameter is an object that contains the updated information for an event.
+ * It could include properties such as the event title, description, date, location, etc.
+ * @param id - The `id` parameter is the identifier of the event that needs to be updated. It is used
+ * to specify which event should be updated in the database.
+ * @param oldImage - The oldImage parameter is the name of the image file that is currently associated
+ * with the event.
+ * @param file - The `file` parameter is an object that represents the file being uploaded. It contains
+ * the following properties:
+ * @param callback - The `callback` parameter is a function that is passed as an argument to
+ * `updateEventHelper` function. It is used to handle the result or error of the asynchronous
+ * operations performed in the function.
+ */
 function updateEventHelper(query, data, id, oldImage, file, callback) {
-    //primero se elimina la imagen que tenia
     tools.deleteFiles(eventPath.concat(oldImage));
-    //
     const fileName = `${Date.now()}_${file.originalname}`;
     const imagePath = eventPath.concat(fileName);
     const image = fileName;

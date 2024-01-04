@@ -69,6 +69,15 @@ function insertPromotionController(req, res) {
     }
 }
 
+/**
+ * The function `updatePromotionController` updates a promotion with the provided information and
+ * returns a response indicating the success or failure of the update.
+ * @param req - The `req` parameter is the request object that contains information about the HTTP
+ * request made to the server. It includes details such as the request headers, request body, and
+ * request parameters.
+ * @param res - The `res` parameter is the response object that is used to send the response back to
+ * the client. It is typically an instance of the Express `Response` object.
+ */
 function updatePromotionController(req, res) {
     const file = req.file;
     const info = JSON.parse(req.body.data);
@@ -93,6 +102,15 @@ function updatePromotionController(req, res) {
     });
 }
 
+/**
+ * The function `getPromotionController` retrieves a promotion by its ID and sends the result as a JSON
+ * response.
+ * @param req - The `req` parameter is the request object that contains information about the HTTP
+ * request made by the client. It includes properties such as the request method, request headers,
+ * request body, and request parameters.
+ * @param res - The `res` parameter is the response object that is used to send the response back to
+ * the client. It is an instance of the Express `Response` object.
+ */
 function getPromotionController(req, res) {
     const idPromocion = req.body.id_promocion;
     const idToFind = tablePromotion.id_promocion;
@@ -108,6 +126,15 @@ function getPromotionController(req, res) {
     });
 }
 
+/**
+ * The function `deletePromotionController` is a JavaScript function that handles the deletion of a
+ * promotion by calling a helper function and returning a response based on the result.
+ * @param req - The `req` parameter is the request object that contains information about the HTTP
+ * request made by the client. It includes data such as the request headers, request parameters,
+ * request body, etc.
+ * @param res - The `res` parameter is the response object that is used to send the response back to
+ * the client. It is an instance of the Express `Response` object.
+ */
 function deletePromotionController(req, res) {
     const idPromocion = [req.body.id_promocion];
     const idToDelete = tablePromotion.id_promocion;

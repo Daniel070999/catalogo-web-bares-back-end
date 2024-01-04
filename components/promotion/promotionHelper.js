@@ -59,6 +59,24 @@ function insertPromotionHelper(query, data, file, callback) {
     });
 }
 
+/**
+ * The function `updatePromotionHelper` is an asynchronous function that updates a promotion in a
+ * database, including updating the promotion image if a new image file is provided.
+ * @param query - The SQL query to update the promotion in the database.
+ * @param data - The `data` parameter is an object that contains the updated promotion information. It
+ * could include properties such as `title`, `description`, `startDate`, `endDate`, etc.
+ * @param id - The `id` parameter is the identifier of the promotion that needs to be updated. It is
+ * used to specify which promotion record in the database should be updated.
+ * @param oldImage - The `oldImage` parameter is the filename of the existing image associated with the
+ * promotion.
+ * @param file - The `file` parameter is an optional parameter that represents the new image file that
+ * is being uploaded for the promotion. If a new image file is provided, it will be used to update the
+ * promotion's image. If no new image file is provided, the existing image will not be updated.
+ * @param callback - The `callback` parameter is a function that will be called once the update
+ * operation is completed. It takes two parameters: `err` and `results`. If an error occurs during the
+ * update operation, `err` will contain the error object, otherwise it will be `null`. If the update
+ * operation
+ */
 async function updatePromotionHelper(query, data, id, oldImage, file, callback) {
     let image;
     let finalData;
@@ -77,6 +95,18 @@ async function updatePromotionHelper(query, data, id, oldImage, file, callback) 
         }
     });
 }
+
+/**
+ * The deletePromotionHelper function executes a SQL query to delete a promotion from a database table
+ * and returns the number of affected rows.
+ * @param query - The SQL query to delete a promotion from the database. It should be a string.
+ * @param id - The `id` parameter is the identifier of the promotion that you want to delete. It is
+ * used to specify which promotion should be deleted from the database.
+ * @param callback - The callback parameter is a function that will be called once the query is
+ * executed. It takes two parameters: err and result. If there is an error during the query execution,
+ * the err parameter will contain the error object. If the query is successful, the result parameter
+ * will contain the number of affected rows
+ */
 function deletePromotionHelper(query, id, callback) {
     connection.query(query, id, (err, result) => {
         if (err) {

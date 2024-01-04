@@ -56,6 +56,19 @@ function obtainRol(req) {
     });
 }
 
+/**
+ * The function `onlyAdminPermission` checks if the user has admin permission based on their token and
+ * role, and returns an error message if they don't.
+ * @param req - The `req` parameter is the request object that contains information about the incoming
+ * HTTP request, such as headers, query parameters, and request body.
+ * @param res - The `res` parameter is the response object that is used to send the response back to
+ * the client. It contains methods and properties that allow you to control the response, such as
+ * setting the status code, headers, and sending the response body.
+ * @param next - The `next` parameter is a callback function that is used to pass control to the next
+ * middleware function in the request-response cycle. It is typically used to move to the next
+ * middleware function or to the final route handler.
+ * @returns a response with a status code and a JSON object containing a message.
+ */
 function onlyAdminPermission(req, res, next) {
     const token = req.header('Authorization');
     if (!token) {
@@ -66,7 +79,7 @@ function onlyAdminPermission(req, res, next) {
             const rol = req.auth.rol;
             if (rol === '2') {
                 next();
-            }else{
+            } else {
                 return res.status(401).json({ message: 'Usuario no autorizado' });
             }
         } else {
@@ -75,6 +88,18 @@ function onlyAdminPermission(req, res, next) {
     });
 }
 
+/**
+ * The function `verifyLoggin` is used to verify if a user is logged in and has the required role
+ * authorization.
+ * @param req - The `req` parameter is the request object that contains information about the HTTP
+ * request made by the client. It includes properties such as the request headers, query parameters,
+ * request body, and more.
+ * @param res - The `res` parameter is the response object in Express.js. It is used to send the
+ * response back to the client.
+ * @param next - The `next` parameter is a callback function that is used to pass control to the next
+ * middleware function in the request-response cycle. It is typically used to move to the next
+ * middleware function or to the final route handler.
+ */
 function verifyLoggin(req, res, next) {
     let rolAuth;
     try {

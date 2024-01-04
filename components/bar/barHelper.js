@@ -127,10 +127,26 @@ function getAllBarByIdHelper(query, values, callback) {
   });
 }
 
+/**
+ * The function `updateBarHelper` updates a bar's logo by deleting the old logo file, saving the new
+ * logo file on the server, and updating the bar's data in the database with the new logo filename.
+ * @param query - The SQL query to update the bar data in the database.
+ * @param data - The `data` parameter is an object that contains the updated information for the bar.
+ * It could include properties such as the bar's name, address, phone number, etc.
+ * @param id - The `id` parameter is the identifier of the bar that needs to be updated. It is used to
+ * specify which bar should be updated in the database.
+ * @param oldLogo - The oldLogo parameter is the name of the previous logo file that needs to be
+ * deleted.
+ * @param file - The `file` parameter is an object that represents the file being uploaded. It contains
+ * information such as the original name of the file (`file.originalname`) and the file's content
+ * (`file.buffer`).
+ * @param callback - The `callback` parameter is a function that is called once the update operation is
+ * complete. It takes two parameters: `err` and `results`. If an error occurs during the update
+ * operation, `err` will contain the error message. Otherwise, `results` will contain the success
+ * message.
+ */
 function updateBarHelper(query, data, id, oldLogo, file, callback) {
-  //primero se elimina la imagen que tenia
   tools.deleteFiles(barLogoPath.concat(oldLogo));
-  //
   const fileName = `${Date.now()}_${file.originalname}`;
   const imagePath = barLogoPath.concat(fileName);
   const logo = fileName;

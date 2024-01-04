@@ -155,6 +155,18 @@ const logOutHelper = (res, callback) => {
 };
 
 
+/**
+ * The dataSessionHelper function executes a database query with the provided query and value, and
+ * returns the results or an error through the provided callback function.
+ * @param query - The query parameter is a string that represents the SQL query you want to execute. It
+ * can be any valid SQL statement, such as SELECT, INSERT, UPDATE, DELETE, etc.
+ * @param value - The `value` parameter is the value that you want to pass as a parameter to the SQL
+ * query. It can be a single value or an array of values, depending on the query you are executing.
+ * @param callback - The `callback` parameter is a function that will be called once the query is
+ * executed. It takes two parameters: `err` and `results`. If an error occurs during the query
+ * execution, the `err` parameter will contain the error object, otherwise it will be `null`. The
+ * `results
+ */
 const dataSessionHelper = (query, value, callback) => {
     connection.query(query, value, (err, results) => {
         if (err) {
