@@ -88,6 +88,26 @@ function onlyAdminPermission(req, res, next) {
     });
 }
 
+
+function RootAndAdminPermission(req, res, next) {
+    const token = req.header('Authorization');
+    if (!token) {
+        return res.status(401).json({ message: 'No ha iniciado sesion' });
+    }
+    authorize()(req, {}, () => {
+        if (req.auth) {
+            const rol = req.auth.rol;
+            if (rol === '2' || rol === '3') {
+                next();
+            } else {
+                return res.status(401).json({ message: 'Usuario no autorizado' });
+            }
+        } else {
+            return res.status(401).json({ message: 'Token de acceso inválido' });
+        }
+    });
+}
+
 /**
  * The function `verifyLoggin` is used to verify if a user is logged in and has the required role
  * authorization.
@@ -124,5 +144,6 @@ module.exports = {
     verifyLoggin,
     obtainId,
     obtainRol,
-    onlyAdminPermission
+    onlyAdminPermission,
+    RootAndAdminPermission
 };

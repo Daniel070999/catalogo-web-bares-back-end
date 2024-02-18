@@ -145,23 +145,21 @@ function getAllBarByIdHelper(query, values, callback) {
  * operation, `err` will contain the error message. Otherwise, `results` will contain the success
  * message.
  */
-function updateBarHelper(query, data, id, oldLogo, file, callback) {
-  tools.deleteFiles(barLogoPath.concat(oldLogo));
-  const fileName = `${Date.now()}_${file.originalname}`;
-  const imagePath = barLogoPath.concat(fileName);
-  const logo = fileName;
-  fs.writeFile(imagePath, file.buffer, (err) => {
+async function updateBarHelper(query, data, id, oldLogo, file, callback) {
+  let image;
+  let finalData;
+  if (file) {
+    tools.deleteFiles(barLogoPath.concat(oldLogo));
+    image = await tools.saveNewImage(file, barLogoPath);
+    finalData = [Object.assign(Object.assign(data, { logo: image })), id];
+  } else {
+    finalData = [data, id];
+  }
+  connection.query(query, finalData, (err, results) => {
     if (err) {
-      return callback('Error al guardar la imagen en el servidor', null);
+      callback(err, null);
     } else {
-      const finalData = [Object.assign(Object.assign(data, { logo: logo })), id];
-      connection.query(query, finalData, (err, results) => {
-        if (err) {
-          callback(err, null);
-        } else {
-          callback(null, results.message);
-        }
-      });
+      callback(null, results.message);
     }
   });
 }

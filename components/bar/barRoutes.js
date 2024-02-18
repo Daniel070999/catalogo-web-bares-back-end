@@ -12,6 +12,6 @@ router.post('/allbarbyid', barController.getAllBarByIdController);//ok
 
 router.post('/barbysessionid', barController.getBarBySessionIdController);//ok
 router.post('/newbar', upload.single('logo'), barController.insertBarController);//ok
-router.post('/update', security.onlyAdminPermission, upload.single('logo'), barController.updateBarController);//ok
+router.post('/update', security.RootAndAdminPermission, upload.single('logo'), barController.updateBarController);//ok
 
 module.exports = router;
