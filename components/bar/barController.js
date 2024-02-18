@@ -181,11 +181,34 @@ function updateBarController(req, res) {
   });
 }
 
+/**
+ * The function `deleteBarController` is a JavaScript function that handles the deletion of a menu
+ * item based on the provided menu ID.
+ * @param req - The `req` parameter is the request object that contains information about the HTTP
+ * request made by the client. It includes data such as the request headers, request parameters,
+ * request body, etc.
+ * @param res - The `res` parameter is the response object that is used to send the response back to
+ * the client. It is an instance of the Express `Response` object.
+ */
+function deleteBarController(req, res) {
+  const idBar = [req.body.id_bar];
+  const idToDelete = tableBar.id_bar;
+  const query = tableBar.getQueryDeleteById(idToDelete);
+  barHelper.deleteBarHelper(query, idBar, (err, result) => {
+    if (err) {
+      res.status(500).json({ error: 'Error al eliminar ' + err });
+    } else {
+      res.status(200).json({ message: result });
+    }
+  });
+}
+
 module.exports = {
   getBarsController,
   getBarsLocationController,
   insertBarController,
   getBarBySessionIdController,
   getAllBarByIdController,
-  updateBarController
+  updateBarController,
+  deleteBarController
 };

@@ -89,6 +89,25 @@ function onlyAdminPermission(req, res, next) {
 }
 
 
+function onlyRootPermission(req, res, next) {
+    const token = req.header('Authorization');
+    if (!token) {
+        return res.status(401).json({ message: 'No ha iniciado sesion' });
+    }
+    authorize()(req, {}, () => {
+        if (req.auth) {
+            const rol = req.auth.rol;
+            if (rol === '3') {
+                next();
+            } else {
+                return res.status(401).json({ message: 'Usuario no autorizado' });
+            }
+        } else {
+            return res.status(401).json({ message: 'Token de acceso inválido' });
+        }
+    });
+}
+
 function RootAndAdminPermission(req, res, next) {
     const token = req.header('Authorization');
     if (!token) {
@@ -145,5 +164,6 @@ module.exports = {
     obtainId,
     obtainRol,
     onlyAdminPermission,
+    onlyRootPermission,
     RootAndAdminPermission
 };

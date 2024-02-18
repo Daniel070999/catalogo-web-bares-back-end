@@ -164,6 +164,26 @@ async function updateBarHelper(query, data, id, oldLogo, file, callback) {
   });
 }
 
+/**
+ * The deleteBarHelper function executes a SQL query to delete a menu item from a database table and
+ * returns the number of affected rows.
+ * @param query - The SQL query to be executed for deleting the menu item(s).
+ * @param id - The `id` parameter is the identifier of the menu item that you want to delete from the
+ * database. It is used to specify which row(s) should be deleted based on their unique identifier.
+ * @param callback - The `callback` parameter is a function that will be called once the query is
+ * executed. It takes two parameters: `err` and `result`. If an error occurs during the query
+ * execution, the `err` parameter will contain the error object, otherwise it will be `null`. If the
+ * query
+ */
+function deleteBarHelper(query, id, callback) {
+  connection.query(query, id, (err, result) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, result.affectedRows);
+    }
+  });
+}
 
 module.exports = {
   getBarsHelper,
@@ -171,5 +191,6 @@ module.exports = {
   insertBarHelper,
   getBarBySessionIdHelper,
   getAllBarByIdHelper,
-  updateBarHelper
+  updateBarHelper,
+  deleteBarHelper
 };
