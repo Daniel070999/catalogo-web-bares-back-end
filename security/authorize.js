@@ -89,6 +89,27 @@ function onlyAdminPermission(req, res, next) {
 }
 
 
+/**
+ * The function `onlyRootPermission` checks if a user has root permission based on their role before
+ * allowing access to a route.
+ * @param req - The `req` parameter in the `onlyRootPermission` function is an object representing the
+ * HTTP request. It contains information about the request made by the client, such as headers,
+ * parameters, body, etc. In this function, the `req` object is used to extract the authorization token
+ * from the
+ * @param res - The `res` parameter in the `onlyRootPermission` function is the response object in
+ * Express.js. It is used to send a response back to the client making the request. In this function,
+ * it is being used to send different HTTP responses with error messages based on certain conditions
+ * like missing token,
+ * @param next - The `next` parameter in the `onlyRootPermission` function is a callback function that
+ * is used to pass control to the next middleware function in the stack. When called, it will execute
+ * the next middleware function. In this context, `next()` is called if the user has root permission
+ * (role
+ * @returns In the provided code snippet, the function `onlyRootPermission` is being returned. This
+ * function is a middleware function that checks for the presence of a token in the request header,
+ * authorizes the token, and then checks if the authenticated user has a role of '3' (which presumably
+ * represents root/administrator permissions). If the user has the required role, the `next()` function
+ * is called to
+ */
 function onlyRootPermission(req, res, next) {
     const token = req.header('Authorization');
     if (!token) {
@@ -108,6 +129,26 @@ function onlyRootPermission(req, res, next) {
     });
 }
 
+/**
+ * The function `RootAndAdminPermission` checks for a valid token and authorizes users with roles 2 or
+ * 3.
+ * @param req - The `req` parameter in the `RootAndAdminPermission` function typically represents the
+ * HTTP request object, which contains information about the request being made, such as the headers,
+ * parameters, body, and more. It is commonly used to access data sent from the client to the server.
+ * @param res - The `res` parameter in the `RootAndAdminPermission` function is the response object in
+ * Express.js. It is used to send a response back to the client making the HTTP request. In the
+ * provided code snippet, the `res` parameter is used to send different HTTP responses with error
+ * messages if
+ * @param next - The `next` parameter in the `RootAndAdminPermission` function is a callback function
+ * that is used to pass control to the next middleware function in the stack. When called, it will
+ * execute the next middleware function. If there are no more middleware functions in the stack, it
+ * will proceed to the
+ * @returns The function `RootAndAdminPermission` is returning different responses based on certain
+ * conditions:
+ * 1. If there is no token in the request header, it returns a 401 status with a message 'No ha
+ * iniciado sesion' (which means 'Not logged in' in Spanish).
+ * 2. If the user is authenticated and has a role of '2' or '3', it calls the `
+ */
 function RootAndAdminPermission(req, res, next) {
     const token = req.header('Authorization');
     if (!token) {

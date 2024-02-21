@@ -5,6 +5,6 @@ const sessionController = require('./sessionControler');
 router.post('/login', sessionController.logInController);//ok
 router.post('/signup', sessionController.signUpController);//ok
 router.post('/logout', sessionController.logOutController);//ok
-router.post('/datasession', sessionController.dataSessionController);
+router.post('/datasession', sessionController.dataSessionController);//ok
 
 module.exports = router;

@@ -9,8 +9,8 @@ const security = require('../../security/authorize');
 const parameters = require('../../utils/parameters');
 const onlyAdmin = parameters.rol.admin;
 
-router.post('/eventbybarid', eventController.getEventByBarIdController);
-router.post('/newevent', upload.single('image'), eventController.insertEventController);
+router.post('/eventbybarid', eventController.getEventByBarIdController);//ok
+router.post('/newevent', upload.single('image'), eventController.insertEventController);//ok
 router.post('/update', security.onlyAdminPermission, upload.single('image'), eventController.updateEventController);//ok
 
 module.exports = router;
